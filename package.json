@@ -3,18 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.8.3",
+    "@rematch/core": "^1.3.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.5",
+    "@types/react-redux": "^7.1.6",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-redux": "^7.1.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./webpack/dev",
+    "dev": "node ./webpack/dev",
+    "build": "NODE_ENV=production webpack --config  ./webpack/prod.js",
+    "lint": "eslint src",
+    "prettier": "prettier --write --single-quote --trailing-comma es5 --print-width 100 \"src/**/*.js\"",
+    "format": "npm run prettier && npm run lint -- --fix",
+    "precommit": "npm run format"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +39,39 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/runtime": "^7.8.3",
+    "autoprefixer": "^9.7.4",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.18.0",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.0.10",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.19.1",
+    "react-hot-loader": "^4.12.18",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.1.3",
+    "stylelint": "^13.0.0",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-bundle-analyzer": "^3.6.0",
+    "webpack-dev-server": "^3.10.1"
   }
 }

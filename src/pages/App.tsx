@@ -7,9 +7,9 @@ import logo from './logo.svg';
 import './App.less';
 
 interface IAppProps {
-  count?: number,
-  increment?: () => void,
-  incrementAsync?: () => void
+  count?: number;
+  increment?: () => void;
+  incrementAsync?: () => void;
 }
 
 class App extends React.Component<IAppProps, {}> {
@@ -37,7 +37,9 @@ class App extends React.Component<IAppProps, {}> {
           <p>计数中：{this.props.count}</p>
           <Count onAddClick={increment} onAddAsyncClick={incrementAsync} />
 
-          <Link to="/login" style={{marginTop: 20}}>到登陆页</Link>
+          <Link to="/login" style={{ marginTop: 20 }}>
+            到登陆页
+          </Link>
         </header>
       </div>
     );

@@ -1,68 +1,52 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## PC端脚手架项目
 
-## Available Scripts
+使用技术栈：
+React + Redux + React-Router + Rematch + webpack + typescript + mock + eslint + prettier + fetch
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### 项目命令行
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- 安装项目：`yarn install`
 
-### `yarn test`
+- 启动开发环境：`yarn start`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  Runs the app in the development mode.<br />
+  Open [http://localhost:5591](http://localhost:5591) to view it in the browser.
 
-### `yarn build`
+- 启动开发环境并查看包体积分布：`yarn start:size`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 生产打包：`yarn build`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+  打包内容在release文件夹中
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### 特性
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. 最新的react框架，自由使用class或者hocks；添加最成熟的redux作为状态管理、router作为路由管理工具；
+2. 使用[rematch]( https://github.com/rematch/rematch)作为redux中间件，尽量减少模版代码，极大提高开发效率；
+3. 使用最新webpack作为打包，区分开发/测试/内测/生产环境；集成热加载，提高开发测试效率；
+4. 开发/生产环境集成包体积命令行，准确了解各包体积大小及组成，杜绝大依赖包引入（如禁止lodash、moment引入生产）；
+5. 静态资源分常变更和不常变更类型，变更资源name上添加hash，自动更新html引入；
+6. 使用eslint+prettier组合规范前端代码，统一各项目代码格式，自动修改代码到规范配置；
+7. 将代码规范强制绑定git commit，提交代码前自动校验并修复代码规范，不规范代码不能提交；
+8. 使用mockjs作为前端本地API mock工具，自动在开发模式下，无代码侵入代理前端代码发出的XMLHttpRequest请求;
+9. 集成typescript，提高前端代码质量，在编译模式发现更多可能bug；
+10. 使用fetch作为ajax库，api各环节高度配置化；
+11. 丰富的路由、组件、同步action、异步action、reducer、请求处理、基础函数等示例，可以直接参考上手开发。
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### 参考文档
 
-### Code Splitting
+[Rematch实践指南](https://rematch.gitbook.io/handbook/)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+[fetch使用](https://github.github.io/fetch/)
 
-### Analyzing the Bundle Size
+[MockJS示例](http://mockjs.com/examples.html)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+[YApi官网](https://yapi.baidu.com/doc/index.html) [github](https://github.com/ymfe/yapi)
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

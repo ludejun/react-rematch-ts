@@ -5,10 +5,10 @@ import Storage from '../../utils/Storage';
 import './index.less';
 
 interface ILoginProps {
-  isAuth?: boolean,
-  isLogining?: boolean,
-  userInfo?: any,
-  fetchLogin?: (payload: object) => void,
+  isAuth?: boolean;
+  isLogining?: boolean;
+  userInfo?: any;
+  fetchLogin?: (payload: object) => void;
 }
 
 class Login extends React.Component<ILoginProps, {}> {
@@ -19,15 +19,16 @@ class Login extends React.Component<ILoginProps, {}> {
   onLoginClick() {
     const { fetchLogin } = this.props;
 
-    fetchLogin && fetchLogin({
-      data: {
-        loginName: '',
-        loginPwd: '***',
-      },
-      cb: (userInfo: object) => {
-        Storage.set('userinfo', userInfo)
-      }
-    })
+    fetchLogin &&
+      fetchLogin({
+        data: {
+          loginName: '',
+          loginPwd: '***',
+        },
+        cb: (userInfo: object) => {
+          Storage.set('userinfo', userInfo);
+        },
+      });
   }
 
   render() {

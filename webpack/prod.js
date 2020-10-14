@@ -2,93 +2,82 @@
 const path = require('path');
 const webpack = require('webpack');
 // const autoprefixer = require('autoprefixer');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const projectConfig = require('../src/configs/index');
 
 const loaders = [
   {
     test: /\.jsx?$/,
+    exclude: /(node_modules)/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        // plugins: [['import', { libraryName: 'antd', style: 'css' }]], // `style: true` 会加载 less 文件
+      },
+    },
+  },
+  {
+    test: /\.tsx?$/,
     exclude: /node_modules/,
-    use: [
-      "babel-loader",
-    ],
-  }, {
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+      // plugins: [['import', { libraryName: 'antd', style: 'css' }]],
+    },
+  }, // 先解析ts和tsx，rule规则从下往上
+  {
     test: /\.json$/,
     exclude: /node_modules/,
-    use: ['json-loader']
+    use: ['json-loader'],
   },
   {
     test: /\.css$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      // use: ['css-loader', 'postcss-loader']
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-            sourceMap: false
-          },
-        },
-        {
-          loader: 'postcss-loader',
-        },
-      ],
-    })
+    use: [
+      {
+        loader: MiniCssExtractPlugin.loader,
+        options: {},
+      },
+      'css-loader',
+    ],
   },
   {
     test: /\.less$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      // use: ['css-loader', 'postcss-loader', 'less-loader']
-      use: [
-        {
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-            sourceMap: false
-          },
-        },
-        {
-          loader: 'postcss-loader',
-        },
-        {
-          loader: 'less-loader',
-          options: {
-            sourceMap: false
-          }
-        }
-      ],
-    })
+    use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
   },
   {
     test: /\.(png|svg|jpg|gif)$/,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        name: '/static/[name]-[hash].[ext]',
-      }
-    }]
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '/static/[name]-[hash].[ext]',
+        },
+      },
+    ],
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        name: '/static/[name]-[hash].[ext]',
-      }
-    }]
-  }
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: '/static/[name]-[hash].[ext]',
+        },
+      },
+    ],
+  },
 ];
 
 const config = {
   resolve: {
-    extensions: ['.web.js', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx'],
   },
   entry: {
-    main: './src/client.js',
+    main: './src/index.tsx',
     // vendor: ['react', 'react-dom']
   },
   output: {
@@ -101,7 +90,7 @@ const config = {
   },
 
   module: {
-    rules: loaders
+    rules: loaders,
   },
 
   mode: 'production',
@@ -109,12 +98,14 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('prod')
-      }
+        NODE_ENV: JSON.stringify('prod'),
+      },
     }),
-    new CleanWebpackPlugin(['release'], { root: path.join(__dirname, '..') }),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['release'],
+    }),
     new HtmlWebpackPlugin({
-      title: 'ReactStartKit',
+      title: projectConfig.htmlTitle,
       inject: true,
       minify: {
         removeComments: true,
@@ -127,14 +118,19 @@ const config = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true,
-        collapseInlineTagWhitespace: true
+        collapseInlineTagWhitespace: true,
       },
       template: path.join(__dirname, '../public/index.html'),
       hash: true,
-      alwaysWriteToDisk: true
+      alwaysWriteToDisk: true,
     }),
     // new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin('[name].min.css'),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: '[name].[chunkhash].css',
+      chunkFilename: '[id].min.css',
+    }),
     // new webpack.optimize.UglifyJsPlugin({
     //   compressor: {
     //     warnings: false,
@@ -142,7 +138,7 @@ const config = {
     //   },
     // }),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new BundleAnalyzerPlugin({analyzerPort: 5593})
+    new BundleAnalyzerPlugin({ analyzerPort: 5593 }),
   ],
 
   // // 防止将某个模块打包到bundle中，如从CDN引入react而不是将它打包
@@ -176,11 +172,11 @@ const config = {
         default: {
           minChunks: 2,
           priority: -20,
-          reuseExistingChunk: true
-        }
-      }
-    }
-  }
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
 };
 
 module.exports = config;

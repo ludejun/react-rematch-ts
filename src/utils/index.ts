@@ -5,7 +5,7 @@
  * @param fillChat 用来补齐长度的单字符
  * @returns {string}
  */
-export function num2String(num:number, count:number = 2, fillChat:string = '0'):string {
+export function num2String(num: number, count: number = 2, fillChat: string = '0'): string {
   const result = num.toString();
   if (result.length >= count) {
     return result;

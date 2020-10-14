@@ -15,7 +15,6 @@ const env = {
 };
 
 const loaders = [
-  // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
   {
     test: /\.jsx?$/,
     exclude: /(node_modules)/,
@@ -90,15 +89,12 @@ const config = {
 
   // The list of plugins for Webpack compiler
   plugins: [
+    new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('dev'),
       },
     }),
-    // new webpack.ProvidePlugin({
-    //   // "window.Quill": "quill/dist/quill",
-    //   "Quill": "quill/dist/quill",
-    // }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
     }),

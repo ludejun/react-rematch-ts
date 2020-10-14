@@ -1,4 +1,4 @@
-import { num2String } from './index';
+import { num2String } from './index.ts';
 
 /**
  * moment的部分方法简易实现，替换moment包（过大）

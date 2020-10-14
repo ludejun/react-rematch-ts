@@ -1,15 +1,21 @@
+import '@babel/polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import Routes from './routes';
+import Storage from './utils/Storage';
 import './index.css';
-import App from './pages/App';
+import configs from './configs';
 import * as serviceWorker from './serviceWorker';
 
+Storage.setNamespace(configs.name);
+
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>, document.getElementById('root')
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
+  document.getElementById('root') as HTMLElement
 );
 
 // If you want your app to work offline and load faster, you can change

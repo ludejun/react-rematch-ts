@@ -7,59 +7,63 @@ const webpackDevServer = require('webpack-dev-server');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const projectConfig = require('../src/configs/index');
 
 const env = {
   hot_server_host: 'localhost',
-  hot_server_port: 5591
+  hot_server_port: 5591,
 };
 
 const loaders = [
   // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
   {
-    test: /\.tsx?$/,
-    use: ["awesome-typescript-loader"]
-  },
-  {
-    enforce: "pre",
-    test: /\.js$/,
-    use: ["source-map-loader"]
-  },
-  {
     test: /\.jsx?$/,
-    exclude: /node_modules/,
-    use: [
-      "react-hot-loader/webpack",
-      "babel-loader",
-    ],
-  }, {
-    test: /\.json$/,
-    exclude: /node_modules/,
-    use: ['json-loader']
+    exclude: /(node_modules)/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env', '@babel/preset-react'],
+        // plugins: [['import', { libraryName: 'antd', style: 'css' }]], // `style: true` 会加载 less 文件
+      },
+    },
   },
+  {
+    test: /\.tsx?$/,
+    exclude: /node_modules/,
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+      // plugins: [['import', { libraryName: 'antd', style: 'css' }]],
+    },
+  }, // 先解析ts和tsx，rule规则从下往上
+  // {
+  //   test: /\.json$/,
+  //   exclude: /node_modules/,
+  //   use: ['json-loader'],
+  // },
   {
     test: /\.css$/,
     // exclude: /node_modules/, // Quill编辑器需要引用nodemodules中的css
-    use: ['style-loader', 'css-loader', 'postcss-loader']
+    use: ['style-loader', 'css-loader', 'postcss-loader'],
   },
   {
     test: /\.less$/,
     exclude: /node_modules/,
-    use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']
+    use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
   },
   {
     test: /\.(png|svg|jpg|gif)$/,
-    use: ['file-loader']
+    use: ['file-loader'],
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: ['file-loader']
-  }
+    use: ['file-loader'],
+  },
 ];
-
 
 const config = {
   resolve: {
-    extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx'],
   },
 
   entry: [
@@ -67,7 +71,7 @@ const config = {
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${env.hot_server_host}:${env.hot_server_port}`,
     'webpack/hot/only-dev-server',
-    './src/index.ts'
+    './src/index.tsx',
   ],
   output: {
     path: path.join(__dirname, '../dist'),
@@ -81,40 +85,40 @@ const config = {
 
   // What information should be printed to the console
   stats: {
-    colors: true
+    colors: true,
   },
 
   // The list of plugins for Webpack compiler
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development')
-      }
+        NODE_ENV: JSON.stringify('dev'),
+      },
     }),
     // new webpack.ProvidePlugin({
     //   // "window.Quill": "quill/dist/quill",
     //   "Quill": "quill/dist/quill",
     // }),
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist']
+      cleanAfterEveryBuildPatterns: ['dist'],
     }),
     new HtmlWebpackPlugin({
-      title: 'ReactStartKit',
+      title: projectConfig.htmlTitle,
       inject: 'body',
       minify: false,
       template: path.join(__dirname, '../public/index.html'),
-      alwaysWriteToDisk: true
+      alwaysWriteToDisk: true,
     }),
     // new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new BundleAnalyzerPlugin({analyzerPort: 5592})
+    // new BundleAnalyzerPlugin({ analyzerPort: 5592 }),
   ],
 
   // Options affecting the normal modules
   module: {
-    rules: loaders
+    rules: loaders,
   },
 
   // 可以在CLI参数中传递
@@ -134,7 +138,10 @@ const config = {
   // },
 };
 
-// module.exports = config;
+// 根据命令行参数决定要不要打开： 打包模块体积分析页面
+if (!process.argv[2] || process.argv[2].indexOf('true') >= 0) {
+  config.plugins.push(new BundleAnalyzerPlugin({ analyzerPort: 5592 }));
+}
 
 const options = {
   contentBase: path.join(__dirname, '../dist'),

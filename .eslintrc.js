@@ -24,7 +24,7 @@ module.exports = {
     // "comma-dangle": ["error", "never"],
     // 允许class中的内部方法使用_ ，其他情况默认不允许
     "no-underscore-dangle": ["error", { "allowAfterThis": true, "enforceInMethodNames": false }],
-    "max-len": [1, 100],
+    "max-len": ["error", 120],
     "global-require": 0,
     "no-plusplus": 0,
     "no-prototype-builtins": 0,

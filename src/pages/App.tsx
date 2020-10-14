@@ -1,22 +1,24 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Count from './components/Count';
+import { Dispatch, RootState } from '../store';
 import logo from './logo.svg';
-import './App.css';
+import './App.less';
 
 interface IAppProps {
   count?: number,
   increment?: () => void,
-  incrementAsync?: ()=>void
+  incrementAsync?: () => void
 }
 
-class App extends React.Component<IAppProps> {
-  constructor(props:IAppProps) {
+class App extends React.Component<IAppProps, {}> {
+  constructor(props: IAppProps) {
     super(props);
   }
 
   render() {
-    const {increment, incrementAsync} = this.props;
+    const { increment, incrementAsync } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -33,20 +35,21 @@ class App extends React.Component<IAppProps> {
             Learn React
           </a>
           <p>计数中：{this.props.count}</p>
-          <Count onAddClick={increment} onAddAsyncClick={incrementAsync}/>
+          <Count onAddClick={increment} onAddAsyncClick={incrementAsync} />
+
+          <Link to="/login" style={{marginTop: 20}}>到登陆页</Link>
         </header>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  count: state.count,
+const mapStateToProps = ({ count }: RootState) => ({
+  count,
 });
-const mapDispatchToProps = ({count: {increment, incrementAsync}}) => ({
+const mapDispatchToProps = ({ count: { increment, incrementAsync } }: Dispatch) => ({
   increment: () => increment(1),
   incrementAsync: () => incrementAsync(1),
 });
 
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);
-export default AppContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

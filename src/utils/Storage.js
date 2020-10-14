@@ -3,8 +3,7 @@ import Moment from './moment';
 import configs from '../configs';
 
 const baseStorage = window.Storage;
-const { stringify } = JSON;
-const { parse } = JSON;
+const { parse, stringify } = JSON;
 
 baseStorage.prototype.set = function (key, value, expired) {
   const wrapped = {

@@ -1,3 +1,5 @@
+import FakeRequest from '../utils/FakeRequest';
+
 export const count = {
   state: 0, // initial state
   reducers: {
@@ -11,7 +13,7 @@ export const count = {
     // use async/await for async actions
     async incrementAsync(payload, rootState) {
       console.log('rootState: ', rootState);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await FakeRequest({ count: rootState });
       this.increment(payload);
     },
   },

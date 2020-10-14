@@ -1,4 +1,4 @@
-## PC端脚手架项目
+## PC端React脚手架项目
 
 使用技术栈：
 React + Redux + React-Router + Rematch + webpack + typescript + mock + eslint + prettier + fetch

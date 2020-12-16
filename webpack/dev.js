@@ -94,6 +94,7 @@ const config = {
       'process.env': {
         NODE_ENV: JSON.stringify('dev'),
       },
+      __MOCK: process.argv[2].indexOf('mock=true') >=0 ? true : false,
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
@@ -135,7 +136,7 @@ const config = {
 };
 
 // 根据命令行参数决定要不要打开： 打包模块体积分析页面
-if (!process.argv[2] || process.argv[2].indexOf('true') >= 0) {
+if (!process.argv[2] || process.argv[2].indexOf('bundleSize=true') >= 0) {
   config.plugins.push(new BundleAnalyzerPlugin({ analyzerPort: 5592 }));
 }
 

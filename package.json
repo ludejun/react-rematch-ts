@@ -21,7 +21,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./webpack/dev --bundleSize=false",
-    "start:size": "node ./webpack/dev",
+    "start:size": "node ./webpack/dev --bundleSize=true",
+    "start:mock": "node ./webpack/dev --mock=true",
     "dev": "node ./webpack/dev",
     "build": "NODE_ENV=prod webpack --config ./webpack/prod.js",
     "lint": "eslint src",

@@ -8,7 +8,11 @@ const configs = {
     test: '/',
     st: '/',
     prod: '/',
+    mock: '/',
   }, // API请求各环境的Domain配置
+  mockWhiteList: [
+
+  ], // 后端Mock Server的白名单，在白名单中可走Mock服务器，不然还是走DEV服务器
 };
 
 module.exports = configs;

@@ -24,7 +24,7 @@ React + Redux + React-Router + Rematch + webpack + typescript + mock + eslint + 
 
 #### 特性
 
-1. 最新的react框架，自由使用class或者hocks；添加最成熟的redux作为状态管理、router作为路由管理工具；
+1. 最新的react框架，自由使用class或者hooks；添加最成熟的redux作为状态管理、router作为路由管理工具；
 2. 使用[rematch]( https://github.com/rematch/rematch)作为redux中间件，尽量减少模版代码，极大提高开发效率；
 3. 使用最新webpack作为打包，区分开发/测试/内测/生产环境；集成热加载，提高开发测试效率；
 4. 开发/生产环境集成包体积命令行，准确了解各包体积大小及组成，杜绝大依赖包引入（如禁止lodash、moment引入生产）；

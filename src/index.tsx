@@ -3,9 +3,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from './store';
+import './index.less';
 import Routes from './routes';
 import Storage from './utils/Storage';
-import './index.css';
 import configs from './configs';
 import * as serviceWorker from './serviceWorker';
 

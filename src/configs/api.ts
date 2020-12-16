@@ -35,3 +35,17 @@ export function ajaxPostOptions(data: any, header = {}): object {
     body: JSON.stringify(data),
   };
 }
+
+// form表单请求Post的options封装
+export function ajaxFormPostOptions(data: { [key: string]: any }, header = {}): object {
+  const formData = new FormData();
+  Object.keys(data).forEach((key: string) => formData.append(key, JSON.stringify(data[key])))
+  return {
+    method: 'POST',
+    headers: {
+      ...header,
+    },
+    credentials: 'include',
+    body: formData,
+  };
+}

@@ -94,7 +94,7 @@ const config = {
       'process.env': {
         NODE_ENV: JSON.stringify('dev'),
       },
-      __MOCK: process.argv[2].indexOf('mock=true') >=0 ? true : false,
+      __MOCK: process.argv[2].indexOf('mock=true') >= 0 ? true : false,
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],

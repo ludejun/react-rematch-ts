@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Count from './components/Count';
 import { Dispatch, RootState } from '../store';
+import monitor from '../utils/monitor';
 import logo from './logo.svg';
 import './App.less';
 
@@ -12,9 +13,16 @@ interface IAppProps {
   incrementAsync?: () => void;
 }
 
+@monitor.track({type: 'PV', id: '1111'})
 class App extends React.Component<IAppProps, {}> {
   constructor(props: IAppProps) {
     super(props);
+  }
+
+  // @monitor.track({type: 'MC', id: '2222', custom: {}})
+  onLogClick() {
+    monitor.trackEv('MC', '333333');
+    console.log('LogClick');
   }
 
   render() {
@@ -34,6 +42,7 @@ class App extends React.Component<IAppProps, {}> {
           >
             Learn React
           </a>
+          <button onClick={this.onLogClick}>点击日志测试</button>
           <p>计数中：{this.props.count}</p>
           <Count onAddClick={increment} onAddAsyncClick={incrementAsync} />
 

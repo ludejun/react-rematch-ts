@@ -89,5 +89,14 @@
     "hooks": {
       "pre-commit": "npm run format"
     }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "stylelintIntegration": true,
+    "eslintIntegration": true,
+    "insertPragma": false,
+    "trailingComma": "none",
+    "arrowParens": "avoid"
   }
 }

@@ -1,8 +1,9 @@
 // 参考 https://github.com/lizhihui2016/web-sdk/blob/master/src/lib/iask-web-sdk.js
+/* eslint-disable */
 export default function(ua) {
-  var uaData = new userAgentBase(ua);
-  var match;
-  var tmpMatch;
+  const uaData = new userAgentBase(ua);
+  let match;
+  let tmpMatch;
   // handle mobile device
   if (uaData.device.type === 'mobile' || uaData.device.type === 'tablet') {
     // get manufacturer through the key words
@@ -92,13 +93,13 @@ export default function(ua) {
       // 若匹配出的 match[2]没空格 会出现很多例如 mizi mizhi miha 但也会出现mi3 minote之类 特殊处理下
       else if (match[2].length > 0 && !/\s/.test(match[2])) {
         if ((tmpMatch = match[2].match(/(\d)/i))) {
-          uaData.device.model = match[1] + '-' + tmpMatch[1];
+          uaData.device.model = `${match[1]}-${tmpMatch[1]}`;
         }
       } else {
         uaData.device.manufacturer = 'Xiaomi';
         if (match[2] && match[2].length > 0) {
           match[2] = match[2].replace(/\s/, '');
-          uaData.device.model = (match[1].substr(match[1].length - 2) + '-' + match[2]).replace(
+          uaData.device.model = `${match[1].substr(match[1].length - 2)}-${match[2]}`.replace(
             /m(\d)-/i,
             'MI-$1'
           );
@@ -132,7 +133,7 @@ export default function(ua) {
       uaData.device.model = 'HM';
     } else if ((match = ua.match(/redmi\s?(\d+)?/i))) {
       uaData.device.manufacturer = 'Xiaomi';
-      uaData.device.model = 'HM-' + match[1];
+      uaData.device.model = `HM-${match[1]}`;
     } else if (
       uaData.device.manufacturer &&
       uaData.device.manufacturer.toLowerCase() === 'xiaomi' &&
@@ -159,9 +160,9 @@ export default function(ua) {
       // mi-2w  mi-3w 等格式化为mi-2  mi-3
       else if ((match = uaData.device.model.match(/(hm|mi)[\s-_](\d?)[a-rt-z]/i))) {
         if ((tmpMatch = uaData.device.model.match(/(mi|hm)[\s-_](note|pad)(\d?s?)/i))) {
-          uaData.device.model = tmpMatch[1] + '-' + tmpMatch[2] + tmpMatch[3];
+          uaData.device.model = `${tmpMatch[1]}-${tmpMatch[2]}${tmpMatch[3]}`;
         } else {
-          uaData.device.model = match[2] ? match[1] + '-' + match[2] : match[1];
+          uaData.device.model = match[2] ? `${match[1]}-${match[2]}` : match[1];
         }
       }
       // 处理hm
@@ -172,9 +173,9 @@ export default function(ua) {
         }
         // 判断是不是 hm-2s hm-1s
         else if ((match = uaData.device.model.match(/(hm)[\s-_](\ds)/i))) {
-          uaData.device.model = 'HM-' + match[2];
+          uaData.device.model = `HM-${match[2]}`;
         } else if ((match = uaData.device.model.match(/(hm)[\s-_](\d)[a-z]/i))) {
-          uaData.device.model = 'HM-' + match[2];
+          uaData.device.model = `HM-${match[2]}`;
         } else {
           uaData.device.model = 'HM';
         }
@@ -218,7 +219,7 @@ export default function(ua) {
       // 特征：[A-Z][0-9]+[A-Z] 例如  A31c A31s 都应该是 A31
       // 对 Plus 做特殊处理
       if ((match = uaData.device.model.match(/([a-z]+[0-9]+)-?(plus)/i))) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       } else if ((match = uaData.device.model.match(/(\w*-?[a-z]+[0-9]+)/i))) {
         uaData.device.model = match[1];
       }
@@ -232,7 +233,7 @@ export default function(ua) {
       // 特征：[A-Z][0-9]+[A-Z] 例如  A31c A31s 都应该是 A31
       // 对 Plus 做特殊处理
       if ((match = uaData.device.model.match(/([a-z]+[0-9]+)-?(plus)/i))) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       } else if ((match = uaData.device.model.match(/(\w*-?[a-z]+[0-9]+)/i))) {
         uaData.device.model = match[1];
       }
@@ -289,11 +290,11 @@ export default function(ua) {
     // handle meizu
     else if ((match = ua.match(/\s(mx\d*\w*|mz-(\w*))\s(\w*)\s*\w*\s*build/i))) {
       uaData.device.manufacturer = 'Meizu';
-      var tmpModel = match[2] ? match[2] : match[1];
+      const tmpModel = match[2] ? match[2] : match[1];
       if (match[3]) {
-        uaData.device.model = tmpModel + '-' + match[3];
+        uaData.device.model = `${tmpModel}-${match[3]}`;
       } else {
-        uaData.device.model = tmpModel + '';
+        uaData.device.model = `${tmpModel}`;
       }
     } else if ((match = ua.match(/M463C|M35\d/i))) {
       uaData.device.manufacturer = 'Meizu';
@@ -355,9 +356,9 @@ export default function(ua) {
     else if ((match = ua.match(/(UIMI\w*|umi\w*)[\s-_](\w*)\s*\w*\s*build/i))) {
       uaData.device.manufacturer = 'Uimi';
       if (match[2]) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       } else {
-        uaData.device.model = match[1] + '';
+        uaData.device.model = `${match[1]}`;
       }
     }
     // eton
@@ -413,7 +414,7 @@ export default function(ua) {
     else if ((match = ua.match(/K-Touch[\s-_](tou\s?ch\s?(\d)|\w*)/i))) {
       uaData.device.manufacturer = 'K-Touch';
       if (match[2]) {
-        uaData.device.model = 'Ktouch' + match[2];
+        uaData.device.model = `Ktouch${match[2]}`;
       } else {
         uaData.device.model = match[1];
       }
@@ -481,11 +482,11 @@ export default function(ua) {
     // 针对xiaomi 的部分数据没有格式化成功，格式化1次
     if (uaData.device.manufacturer && uaData.device.manufacturer === 'Xiaomi') {
       if ((match = uaData.device.model.match(/(hm|mi)-(note)/i))) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       } else if ((match = uaData.device.model.match(/(hm|mi)-(\ds?)/i))) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       } else if ((match = uaData.device.model.match(/(hm|mi)-(\d)[a-rt-z]/i))) {
-        uaData.device.model = match[1] + '-' + match[2];
+        uaData.device.model = `${match[1]}-${match[2]}`;
       }
     }
   }
@@ -502,25 +503,25 @@ export default function(ua) {
         original: match[1],
       };
     } else if ((match = /the world(?:[ \/]([\w.]+))?/i.exec(ua))) {
-    /**
-     * the world
-     */
+      /**
+       * the world
+       */
       uaData.browser.name = 'the world';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /tencenttraveler ([\w.]+)/i.exec(ua))) {
-    /**
-     * tencenttraveler
-     */
+      /**
+       * tencenttraveler
+       */
       uaData.browser.name = 'tencenttraveler';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /LBBROWSER/i.exec(ua))) {
-    /**
-     * LBBROWSER
-     */
+      /**
+       * LBBROWSER
+       */
       uaData.browser.name = 'LBBROWSER';
     }
   } else if (uaData.device.type === 'mobile' || uaData.device.type === 'tablet') {
@@ -533,80 +534,73 @@ export default function(ua) {
         original: match[1],
       };
     } else if ((match = /360.s*aphone\s*browser\s*\(version\s*([\w.]+)\)/i.exec(ua))) {
-    /**
-     * 360 Browser
-     */
+      /**
+       * 360 Browser
+       */
       uaData.browser.name = '360 Browser';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /flyflow\/([\w.]+)/i.exec(ua))) {
-    /**
-     * Baidu Browser
-     */
+      /**
+       * Baidu Browser
+       */
       uaData.browser.name = 'Baidu Browser';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /baiduhd ([\w.]+)/i.exec(ua))) {
-
-    /**
-     * Baidu HD
-     */
+      /**
+       * Baidu HD
+       */
       uaData.browser.name = 'Baidu HD';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /baidubrowser\/([\d\.]+)\s/i.exec(ua))) {
-
-    /**
-     * baidubrowser
-     */
+      /**
+       * baidubrowser
+       */
       uaData.browser.name = 'baidubrowser';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /LieBaoFast\/([\w.]+)/i.exec(ua))) {
-
-    /**
-     * LieBaoFast
-     */
+      /**
+       * LieBaoFast
+       */
       uaData.browser.name = 'LieBao Fast';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /LieBao\/([\w.]+)/i.exec(ua))) {
-
-    /**
-     * LieBao
-     */
+      /**
+       * LieBao
+       */
       uaData.browser.name = 'LieBao';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /Sogou\w+\/([0-9\.]+)/i.exec(ua))) {
-
-    /**
-     * SOUGOU
-     */
+      /**
+       * SOUGOU
+       */
       uaData.browser.name = 'SogouMobileBrowser';
       uaData.browser.version = {
         original: match[1],
       };
     } else if ((match = /bdbrowser\w+\/([0-9\.]+)/i.exec(ua))) {
-
-    /**
-     * 百度国际
-     */
+      /**
+       * 百度国际
+       */
       uaData.browser.name = '百度国际';
       uaData.browser.version = {
         original: match[1],
       };
     } else if (
-
-    /**
-     * Android Chrome Browser
-     */
+      /**
+       * Android Chrome Browser
+       */
       uaData.os.name === 'Android' &&
       /safari/i.test(ua) &&
       (match = /chrome\/([0-9\.]+)/i.exec(ua))
@@ -623,10 +617,9 @@ export default function(ua) {
         uaData.browser.version = { original: match[1] };
       }
     } else if (
-
-    /**
-     * Android Google Browser
-     */
+      /**
+       * Android Google Browser
+       */
       uaData.os.name === 'Android' &&
       /safari/i.test(ua) &&
       (match = /version\/([0-9\.]+)/i.exec(ua))
@@ -643,10 +636,9 @@ export default function(ua) {
         uaData.browser.version = { original: match[1] };
       }
     } else if (/(ipad|iphone).* applewebkit\/.* mobile/i.test(ua)) {
-
-    /**
-     * 'Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206' belongs to Safari
-     */
+      /**
+       * 'Mozilla/5.0 (iPad; CPU OS 5_1_1 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Mobile/9B206' belongs to Safari
+       */
       uaData.browser.name = 'Safari';
     }
   }
@@ -673,7 +665,7 @@ export default function(ua) {
   // }
   if ((match = /MicroMessenger\/([\w.]+)/i.exec(ua))) {
     uaData.browser.name = '微信';
-    var tmpVersion = match[1].replace(/_/g, '.');
+    let tmpVersion = match[1].replace(/_/g, '.');
     tmpMatch = /(\d+\.\d+\.\d+\.\d+)/.exec(tmpVersion);
     if (tmpMatch) {
       tmpVersion = tmpMatch[1];
@@ -781,20 +773,20 @@ export default function(ua) {
 }
 
 var userAgentBase = (function() {
-  var match;
-  var STRINGS_SAMSUNG = 'Samsung',
-    STRINGS_SHARP = 'Sharp',
-    STRINGS_SONY_ERICSSON = 'Sony Ericsson',
-    STRINGS_MOTOROLA = 'Motorola',
-    STRINGS_LG = 'LG',
-    STRINGS_HUAWEI = 'Huawei',
-    STRINGS_HTC = 'HTC',
-    STRINGS_COOLPAD = 'Coolpad',
-    STRINGS_ASUS = 'Asus',
-    STRINGS_ACER = 'Acer';
-  var STRINGS_BASED = ' based device';
+  let match;
+  const STRINGS_SAMSUNG = 'Samsung';
+  const STRINGS_SHARP = 'Sharp';
+  const STRINGS_SONY_ERICSSON = 'Sony Ericsson';
+  const STRINGS_MOTOROLA = 'Motorola';
+  const STRINGS_LG = 'LG';
+  const STRINGS_HUAWEI = 'Huawei';
+  const STRINGS_HTC = 'HTC';
+  const STRINGS_COOLPAD = 'Coolpad';
+  const STRINGS_ASUS = 'Asus';
+  const STRINGS_ACER = 'Acer';
+  const STRINGS_BASED = ' based device';
 
-  var TOUCHWIZ_MODELS = {
+  const TOUCHWIZ_MODELS = {
     SAMSUNG: {
       'GT-S3370C': [STRINGS_SAMSUNG, 'Corby 3G'],
       'GT-S3650': [STRINGS_SAMSUNG, 'Corby'],
@@ -818,7 +810,7 @@ var userAgentBase = (function() {
     },
   };
 
-  var BADA_MODELS = {
+  const BADA_MODELS = {
     SAMSUNG: {
       'GT- S5250': [STRINGS_SAMSUNG, 'Wave 525'],
       'GT-S5250': [STRINGS_SAMSUNG, 'Wave 525'],
@@ -844,19 +836,19 @@ var userAgentBase = (function() {
     },
   };
 
-  var TIZEN_MODELS = {
+  const TIZEN_MODELS = {
     SAMSUNG: {
       'GT-I9500': [STRINGS_SAMSUNG, 'GT-I9500'],
     },
   };
 
-  var BREW_MODELS = {
+  const BREW_MODELS = {
     'Coolpad D508': [STRINGS_COOLPAD, 'D508'],
     'Coolpad E600': [STRINGS_COOLPAD, 'E600'],
     'SCH-F839': [STRINGS_SAMSUNG, 'SCH-F839'],
   };
 
-  var WINDOWS_MOBILE_MODELS = {
+  const WINDOWS_MOBILE_MODELS = {
     DX900: [STRINGS_ACER, 'Tempo DX900'],
     F900: [STRINGS_ACER, 'Tempo F900'],
     'Coolpad F800': [STRINGS_COOLPAD, 'F800'],
@@ -891,7 +883,7 @@ var userAgentBase = (function() {
     M1i: [STRINGS_SONY_ERICSSON, 'M1i Aspen'],
   };
 
-  var WINDOWS_PHONE_MODELS = {
+  const WINDOWS_PHONE_MODELS = {
     Acer: {
       Allegro: [STRINGS_ACER, 'Allegro'],
       M310: [STRINGS_ACER, 'Allegro'],
@@ -964,12 +956,12 @@ var userAgentBase = (function() {
     },
 
     NOKIA: {
-      '710': ['Nokia', 'Lumia 710'],
+      710: ['Nokia', 'Lumia 710'],
       'Nokia 710': ['Nokia', 'Lumia 710'],
       'Lumia 710': ['Nokia', 'Lumia 710'],
       'Lumia 719': ['Nokia', 'Lumia 719'],
       'Lumia 800': ['Nokia', 'Lumia 800'],
-      '800': ['Nokia', 'Lumia 800'],
+      800: ['Nokia', 'Lumia 800'],
       'Lumia 900': ['Nokia', 'Lumia 900'],
       XXX: ['Nokia', 'prototype'],
     },
@@ -994,7 +986,7 @@ var userAgentBase = (function() {
     },
   };
 
-  var ANDROID_MODELS = {
+  const ANDROID_MODELS = {
     Android: [null, null],
     'google sdk': [null, null],
     sdk: [null, null],
@@ -1276,25 +1268,25 @@ var userAgentBase = (function() {
     'Coolpad 5010': ['Coolpad', '5010'],
     'Coolpad 5210': ['Coolpad', '5210'],
     'Coolpad 5820': ['Coolpad', '5820'],
-    '5832': ['Coolpad', '5832'],
+    5832: ['Coolpad', '5832'],
     'Coolpad 5832': ['Coolpad', '5832'],
-    '5855': ['Coolpad', '5855'],
+    5855: ['Coolpad', '5855'],
     'Coolpad 5860': ['Coolpad', '5860'],
     'Coolpad 5860+': ['Coolpad', '5860'],
     'Coolpad 5860s': ['Coolpad', '5860'],
-    '5860': ['Coolpad', '5860'],
+    5860: ['Coolpad', '5860'],
     '5860A': ['Coolpad', '5860'],
     'Coolpad 5870': ['Coolpad', '5870'],
-    '5870': ['Coolpad', '5870'],
+    5870: ['Coolpad', '5870'],
     'Coolpad 7005': ['Coolpad', '7005'],
-    '7260': ['Coolpad', '7260'],
+    7260: ['Coolpad', '7260'],
     'Coolpad 7019': ['Coolpad', '7019'],
     'Coolpad 7260': ['Coolpad', '7260'],
     'Coolpad 8013': ['Coolpad', '8013'],
     'Coolpad 8809': ['Coolpad', '8809'],
     'Coolpad 8810': ['Coolpad', '8810'],
-    '8810': ['Coolpad', '8810'],
-    '8150': ['Coolpad', '8150'],
+    8810: ['Coolpad', '8810'],
+    8150: ['Coolpad', '8150'],
     'Coolpad 8150D': ['Coolpad', '8150'],
 
     'Coolpad 8811': ['Coolpad', '8811'],
@@ -3253,63 +3245,63 @@ var userAgentBase = (function() {
     'GT-S6102E': ['Samsung', 'Galaxy Y Duos'],
   };
 
-  var BLACKBERRY_MODELS = {
-    '9600': 'Bold',
-    '9650': 'Bold',
-    '9700': 'Bold',
-    '9780': 'Bold',
-    '9790': 'Bold',
-    '9900': 'Bold',
-    '9930': 'Bold',
-    '8300': 'Curve',
-    '8310': 'Curve',
-    '8320': 'Curve',
-    '8330': 'Curve',
+  const BLACKBERRY_MODELS = {
+    9600: 'Bold',
+    9650: 'Bold',
+    9700: 'Bold',
+    9780: 'Bold',
+    9790: 'Bold',
+    9900: 'Bold',
+    9930: 'Bold',
+    8300: 'Curve',
+    8310: 'Curve',
+    8320: 'Curve',
+    8330: 'Curve',
     '8350i': 'Curve',
-    '8520': 'Curve',
-    '8530': 'Curve',
-    '8900': 'Curve',
-    '9220': 'Curve',
-    '9300': 'Curve',
-    '9330': 'Curve',
-    '9350': 'Curve',
-    '9360': 'Curve',
-    '9370': 'Curve',
-    '9380': 'Curve',
-    '8100': 'Pearl',
-    '8110': 'Pearl',
-    '8120': 'Pearl',
-    '8130': 'Pearl',
-    '8220': 'Pearl',
-    '8230': 'Pearl',
-    '9100': 'Pearl',
-    '9105': 'Pearl',
-    '9530': 'Storm',
-    '9550': 'Storm',
-    '9670': 'Style',
-    '9800': 'Torch',
-    '9810': 'Torch',
-    '9850': 'Torch',
-    '9860': 'Torch',
-    '9630': 'Tour',
-    '9981': 'Porsche P',
+    8520: 'Curve',
+    8530: 'Curve',
+    8900: 'Curve',
+    9220: 'Curve',
+    9300: 'Curve',
+    9330: 'Curve',
+    9350: 'Curve',
+    9360: 'Curve',
+    9370: 'Curve',
+    9380: 'Curve',
+    8100: 'Pearl',
+    8110: 'Pearl',
+    8120: 'Pearl',
+    8130: 'Pearl',
+    8220: 'Pearl',
+    8230: 'Pearl',
+    9100: 'Pearl',
+    9105: 'Pearl',
+    9530: 'Storm',
+    9550: 'Storm',
+    9670: 'Style',
+    9800: 'Torch',
+    9810: 'Torch',
+    9850: 'Torch',
+    9860: 'Torch',
+    9630: 'Tour',
+    9981: 'Porsche P',
   };
 
-  var Version = function() {
+  const Version = function() {
     this.initialize.apply(this, Array.prototype.slice.call(arguments));
   };
   Version.prototype = {
-    initialize: function(v) {
+    initialize(v) {
       this.original = v.value || null;
       this.alias = v.alias || null;
     },
   };
 
-  var Detected = function() {
+  const Detected = function() {
     this.initialize.apply(this, arguments);
   };
   Detected.prototype = {
-    initialize: function(ua, options) {
+    initialize(ua, options) {
       this.options = {
         useFeatures: (options && options.useFeatures) || false,
         detectCamouflage: (options && options.detectCamouflage) || true,
@@ -3332,8 +3324,8 @@ var userAgentBase = (function() {
       this.detect(ua);
     },
 
-    detect: function(ua) {
-      /****************************************************
+    detect(ua) {
+      /** **************************************************
        *      Unix
        */
 
@@ -3341,7 +3333,7 @@ var userAgentBase = (function() {
         this.os.name = 'Unix';
       }
 
-      /****************************************************
+      /** **************************************************
        *      FreeBSD
        */
 
@@ -3349,7 +3341,7 @@ var userAgentBase = (function() {
         this.os.name = 'FreeBSD';
       }
 
-      /****************************************************
+      /** **************************************************
        *      OpenBSD
        */
 
@@ -3357,7 +3349,7 @@ var userAgentBase = (function() {
         this.os.name = 'OpenBSD';
       }
 
-      /****************************************************
+      /** **************************************************
        *      NetBSD
        */
 
@@ -3365,7 +3357,7 @@ var userAgentBase = (function() {
         this.os.name = 'NetBSD';
       }
 
-      /****************************************************
+      /** **************************************************
        *      SunOS
        */
 
@@ -3373,7 +3365,7 @@ var userAgentBase = (function() {
         this.os.name = 'Solaris';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Linux
        */
 
@@ -3459,7 +3451,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      iOS
        */
 
@@ -3498,7 +3490,7 @@ var userAgentBase = (function() {
 
         this.device.identified = true;
       } else if (ua.match('Mac OS X')) {
-        /****************************************************
+        /** **************************************************
          *      MacOS X
          */
         this.os.name = 'Mac OS X';
@@ -3510,7 +3502,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Windows
        */
 
@@ -3560,7 +3552,7 @@ var userAgentBase = (function() {
             default:
               this.os.version = new Version({
                 value: match[1],
-                alias: 'NT ' + this.os.version,
+                alias: `NT ${this.os.version}`,
               });
           }
         }
@@ -3689,7 +3681,7 @@ var userAgentBase = (function() {
 
           this.device.type = 'mobile';
 
-          var manufacturer = this.device.manufacturer;
+          var { manufacturer } = this.device;
           var model = cleanupModel(this.device.model);
 
           if (
@@ -3710,7 +3702,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Android
        */
       if (ua.match('Android')) {
@@ -3841,7 +3833,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Google TV
        */
 
@@ -3863,7 +3855,7 @@ var userAgentBase = (function() {
         this.device.type = 'television';
       }
 
-      /****************************************************
+      /** **************************************************
        *      WoPhone
        */
 
@@ -3879,7 +3871,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      BlackBerry
        */
 
@@ -3912,10 +3904,11 @@ var userAgentBase = (function() {
 
           if (typeof this.device.model !== 'undefined') {
             if (typeof BLACKBERRY_MODELS[this.device.model] !== 'undefined') {
-              this.device.model =
-                'BlackBerry ' + BLACKBERRY_MODELS[this.device.model] + ' ' + this.device.model;
+              this.device.model = `BlackBerry ${BLACKBERRY_MODELS[this.device.model]} ${
+                this.device.model
+              }`;
             } else {
-              this.device.model = 'BlackBerry ' + this.device.model;
+              this.device.model = `BlackBerry ${this.device.model}`;
             }
           } else {
             this.device.model = 'BlackBerry';
@@ -3929,7 +3922,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      BlackBerry PlayBook
        */
 
@@ -3959,7 +3952,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      WebOS
        */
 
@@ -3991,7 +3984,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      S60
        */
 
@@ -4039,7 +4032,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      S40
        */
 
@@ -4055,7 +4048,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      MeeGo
        */
 
@@ -4070,7 +4063,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Maemo
        */
 
@@ -4085,7 +4078,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Tizen
        */
 
@@ -4109,7 +4102,7 @@ var userAgentBase = (function() {
               typeof TIZEN_MODELS[this.device.manufacturer] !== 'undefined' &&
               typeof TIZEN_MODELS[this.device.manufacturer][this.device.model] !== 'undefined'
             ) {
-              var manufacturer = this.device.manufacturer;
+              var { manufacturer } = this.device;
               var model = cleanupModel(this.device.model);
 
               this.device.manufacturer = TIZEN_MODELS[manufacturer][model][0];
@@ -4120,7 +4113,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Bada
        */
 
@@ -4144,7 +4137,7 @@ var userAgentBase = (function() {
           typeof BADA_MODELS[this.device.manufacturer] !== 'undefined' &&
           typeof BADA_MODELS[this.device.manufacturer][this.device.model] !== 'undefined'
         ) {
-          var manufacturer = this.device.manufacturer;
+          var { manufacturer } = this.device;
           var model = cleanupModel(this.device.model);
 
           this.device.manufacturer = BADA_MODELS[manufacturer][model][0];
@@ -4153,7 +4146,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Brew
        */
 
@@ -4188,7 +4181,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      MTK
        */
 
@@ -4197,7 +4190,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      CrOS
        */
 
@@ -4206,7 +4199,7 @@ var userAgentBase = (function() {
         this.device.type = 'desktop';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Joli OS
        */
 
@@ -4221,7 +4214,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Haiku
        */
 
@@ -4230,7 +4223,7 @@ var userAgentBase = (function() {
         this.device.type = 'desktop';
       }
 
-      /****************************************************
+      /** **************************************************
        *      QNX
        */
 
@@ -4239,7 +4232,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      OS/2 Warp
        */
 
@@ -4254,7 +4247,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Grid OS
        */
 
@@ -4269,7 +4262,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      AmigaOS
        */
 
@@ -4284,7 +4277,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      MorphOS
        */
 
@@ -4299,7 +4292,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Kindle
        */
 
@@ -4316,7 +4309,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      NOOK
        */
 
@@ -4329,7 +4322,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Bookeen
        */
 
@@ -4347,7 +4340,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Sony Reader
        */
 
@@ -4360,7 +4353,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      iRiver
        */
 
@@ -4378,7 +4371,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Nintendo
        *
        *      Opera/9.30 (Nintendo Wii; U; ; 3642; en)
@@ -4461,7 +4454,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Panasonic Smart Viera
        *
        *      Mozilla/5.0 (FreeBSD; U; Viera; ja-JP) AppleWebKit/535.1 (KHTML, like Gecko) Viera/1.2.4 Chrome/14.0.835.202 Safari/535.1
@@ -4475,7 +4468,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Sharp AQUOS TV
        *
        *      Mozilla/5.0 (DTV) AppleWebKit/531.2  (KHTML, like Gecko) AQUOSBrowser/1.0 (US00DTV;V;0001;0001)
@@ -4491,7 +4484,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Samsung Smart TV
        *
        *      Mozilla/5.0 (SmartHub; SMART-TV; U; Linux/SmartTV; Maple2012) AppleWebKit/534.7 (KHTML, like Gecko) SmartTV Safari/534.7
@@ -4506,11 +4499,11 @@ var userAgentBase = (function() {
         this.device.identified = true;
 
         if ((match = /Maple([0-9]*)/.exec(ua))) {
-          this.device.model += ' ' + match[1];
+          this.device.model += ` ${match[1]}`;
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Sony Internet TV
        *
        *      Opera/9.80 (Linux armv7l; U; InettvBrowser/2.2(00014A;SonyDTV115;0002;0100) KDL-46EX640; CC/USA; en) Presto/2.8.115 Version/11.10
@@ -4531,7 +4524,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Philips Net TV
        *
        *      Opera/9.70 (Linux armv6l ; U; CE-HTML/1.0 NETTV/2.0.2; en) Presto/2.2.1
@@ -4549,7 +4542,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      LG NetCast TV
        *
        *      Mozilla/5.0 (DirectFB; Linux armv7l) AppleWebKit/534.26+ (KHTML, like Gecko) Version/5.0 Safari/534.26+ LG Browser/5.00.00(+mouse+3D+SCREEN+TUNER; LGE; GLOBAL-PLAT4; 03.09.22; 0x00000001;); LG NetCast.TV-2012
@@ -4563,7 +4556,7 @@ var userAgentBase = (function() {
       if ((match = /LG NetCast\.(?:TV|Media)-([0-9]*)/.exec(ua))) {
         this.os.name = '';
         this.device.manufacturer = STRINGS_LG;
-        this.device.model = 'NetCast TV ' + match[1];
+        this.device.model = `NetCast TV ${match[1]}`;
         this.device.type = 'television';
         this.device.identified = true;
       }
@@ -4576,7 +4569,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Toshiba Smart TV
        *
        *      Mozilla/5.0 (Linux mipsel; U; HbbTV/1.1.1 (; TOSHIBA; DTV_RL953; 56.7.66.7; t12; ) ; ToshibaTP/1.3.0 (+VIDEO_MP4+VIDEO_X_MS_ASF+AUDIO_MPEG+AUDIO_MP4+DRM+NATIVELAUNCH) ; en) AppleWebKit/534.1 (KHTML, like Gecko)
@@ -4592,7 +4585,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      MachBlue XT
        */
 
@@ -4606,20 +4599,21 @@ var userAgentBase = (function() {
         this.device.type = 'television';
       }
 
-      /****************************************************
+      /** **************************************************
        *      ADB
        */
 
       if ((match = /\(ADB; ([^\)]+)\)/.exec(ua))) {
         this.os.name = '';
         this.device.manufacturer = 'ADB';
-        this.device.model =
-          (match[1] !== 'Unknown' ? match[1].replace('ADB', '') + ' ' : '') + 'IPTV receiver';
+        this.device.model = `${
+          match[1] !== 'Unknown' ? `${match[1].replace('ADB', '')} ` : ''
+        }IPTV receiver`;
         this.device.type = 'television';
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      MStar
        */
 
@@ -4633,7 +4627,7 @@ var userAgentBase = (function() {
         this.browser.name = 'Origyn Web Browser';
       }
 
-      /****************************************************
+      /** **************************************************
        *      TechniSat
        */
 
@@ -4645,7 +4639,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Technicolor
        */
 
@@ -4657,7 +4651,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Winbox Evo2
        */
 
@@ -4669,7 +4663,7 @@ var userAgentBase = (function() {
         this.device.identified = true;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Roku
        */
 
@@ -4705,8 +4699,8 @@ var userAgentBase = (function() {
       }
 
       if ((match = /HbbTV\/1.1.1 \([^;]*;\s*([^;]*)\s*;\s*([^;]*)\s*;/.exec(ua))) {
-        var vendorName = match[1].trim();
-        var modelName = match[2].trim();
+        const vendorName = match[1].trim();
+        const modelName = match[2].trim();
 
         if (!this.device.manufacturer && vendorName !== '' && vendorName !== 'vendorName') {
           switch (vendorName) {
@@ -4753,7 +4747,7 @@ var userAgentBase = (function() {
         this.device.type = 'television';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Detect type based on common identifiers
        */
 
@@ -4765,15 +4759,15 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Try to detect any devices based on common
        *      locations of model ids
        */
 
       if (!this.device.model && !this.device.manufacturer) {
-        var candidates = [];
+        const candidates = [];
 
-        if (!ua.match(/^(Mozilla|Opera)/))
+        if (!ua.match(/^(Mozilla|Opera)/)) {
           if ((match = /^(?:MQQBrowser\/[0-9\.]+\/)?([^\s]+)/.exec(ua))) {
             match[1] = match[1].replace(/_TD$/, '');
             match[1] = match[1].replace(/_CMCC$/, '');
@@ -4784,6 +4778,7 @@ var userAgentBase = (function() {
 
             candidates.push(match[1]);
           }
+        }
 
         if ((match = /[0-9]+x[0-9]+; ([^;]+)/.exec(ua))) {
           candidates.push(match[1]);
@@ -4813,7 +4808,7 @@ var userAgentBase = (function() {
           candidates.push(match[1]);
         }
 
-        for (var i = 0; i < candidates.length; i++) {
+        for (let i = 0; i < candidates.length; i++) {
           if (!this.device.model && !this.device.manufacturer) {
             var model = cleanupModel(candidates[i]);
             var result = false;
@@ -5036,7 +5031,7 @@ var userAgentBase = (function() {
         this.os.name = 'Series60';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Safari
        */
 
@@ -5065,7 +5060,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Internet Explorer
        */
 
@@ -5088,7 +5083,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Opera
        */
 
@@ -5189,7 +5184,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Firefox
        */
 
@@ -5278,7 +5273,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      SeaMonkey
        */
 
@@ -5293,7 +5288,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Netscape
        */
 
@@ -5308,7 +5303,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Konqueror
        */
 
@@ -5322,7 +5317,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Chrome
        */
 
@@ -5383,7 +5378,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Chrome Frame
        */
 
@@ -5398,7 +5393,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Chromium
        */
 
@@ -5414,7 +5409,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      BrowserNG
        */
 
@@ -5430,7 +5425,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Nokia Browser
        */
 
@@ -5445,7 +5440,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      MicroB
        */
 
@@ -5460,7 +5455,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      NetFront
        */
 
@@ -5479,7 +5474,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Silk
        */
 
@@ -5506,7 +5501,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Dolfin
        */
 
@@ -5520,7 +5515,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Iris
        */
 
@@ -5542,14 +5537,14 @@ var userAgentBase = (function() {
 
         if ((match = / WM([0-9]) /.exec(ua))) {
           this.os.version = new Version({
-            value: match[1] + '.0',
+            value: `${match[1]}.0`,
           });
         } else {
           this.browser.mode = 'desktop';
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Jasmine
        */
 
@@ -5563,7 +5558,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Boxee
        */
 
@@ -5578,7 +5573,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Espial
        */
 
@@ -5601,7 +5596,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      ANT Galio
        */
       if ((match = /ANTGalio\/([0-9.]*)/.exec(ua))) {
@@ -5613,7 +5608,7 @@ var userAgentBase = (function() {
         this.device.type = 'television';
       }
 
-      /****************************************************
+      /** **************************************************
        *      NetFront NX
        */
       if ((match = /NX\/([0-9.]*)/.exec(ua))) {
@@ -5634,7 +5629,7 @@ var userAgentBase = (function() {
         this.os.version = null;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Obigo
        */
 
@@ -5648,21 +5643,21 @@ var userAgentBase = (function() {
         }
 
         if ((match = /Obigo\/([A-Z])([0-9.]*)/i.exec(ua))) {
-          this.browser.name = 'Obigo ' + match[1];
+          this.browser.name = `Obigo ${match[1]}`;
           this.browser.version = new Version({
             value: match[2],
           });
         }
 
         if ((match = /Obigo-([A-Z])([0-9.]*)\//i.exec(ua))) {
-          this.browser.name = 'Obigo ' + match[1];
+          this.browser.name = `Obigo ${match[1]}`;
           this.browser.version = new Version({
             value: match[2],
           });
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      UC Web
        */
 
@@ -5726,7 +5721,7 @@ var userAgentBase = (function() {
         });
       }
 
-      /****************************************************
+      /** **************************************************
        *      NineSky
        */
 
@@ -5745,7 +5740,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Skyfire
        */
 
@@ -5761,7 +5756,7 @@ var userAgentBase = (function() {
         this.os.version = null;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Dolphin HD
        */
 
@@ -5784,7 +5779,7 @@ var userAgentBase = (function() {
         this.device.type = 'mobile';
       }
 
-      /****************************************************
+      /** **************************************************
        *      QQ Browser
        */
 
@@ -5792,7 +5787,7 @@ var userAgentBase = (function() {
         this.browser.name = 'QQ Browser';
 
         var version = match[2];
-        if (version.match(/^[0-9][0-9]$/)) version = version[0] + '.' + version[1];
+        if (version.match(/^[0-9][0-9]$/)) version = `${version[0]}.${version[1]}`;
 
         this.browser.version = new Version({
           value: version,
@@ -5805,7 +5800,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      iBrowser
        */
 
@@ -5813,7 +5808,7 @@ var userAgentBase = (function() {
         this.browser.name = 'iBrowser';
 
         var version = match[2];
-        if (version.match(/[0-9][0-9]/)) version = version[0] + '.' + version[1];
+        if (version.match(/[0-9][0-9]/)) version = `${version[0]}.${version[1]}`;
 
         this.browser.version = new Version({
           value: version,
@@ -5822,7 +5817,7 @@ var userAgentBase = (function() {
         this.browser.channel = '';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Puffin
        */
 
@@ -5841,7 +5836,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      360 Extreme Explorer
        */
 
@@ -5851,7 +5846,7 @@ var userAgentBase = (function() {
         this.browser.version = null;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Midori
        */
 
@@ -5871,11 +5866,11 @@ var userAgentBase = (function() {
         this.device.type = 'desktop';
       }
 
-      /****************************************************
+      /** **************************************************
        *      Others
        */
 
-      var browsers = [
+      const browsers = [
         {
           name: 'AdobeAIR',
           regexp: /AdobeAIR\/([0-9.]*)/,
@@ -6303,7 +6298,7 @@ var userAgentBase = (function() {
         },
       ];
 
-      for (var b = 0; b < browsers.length; b++) {
+      for (let b = 0; b < browsers.length; b++) {
         if ((match = browsers[b].regexp.exec(ua))) {
           this.browser.name = browsers[b].name;
           this.browser.channel = '';
@@ -6320,7 +6315,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      WebKit
        */
 
@@ -6338,7 +6333,7 @@ var userAgentBase = (function() {
         });
       }
 
-      /****************************************************
+      /** **************************************************
        *      KHTML
        */
 
@@ -6349,7 +6344,7 @@ var userAgentBase = (function() {
         });
       }
 
-      /****************************************************
+      /** **************************************************
        *      Gecko
        */
 
@@ -6363,7 +6358,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Presto
        */
 
@@ -6374,7 +6369,7 @@ var userAgentBase = (function() {
         });
       }
 
-      /****************************************************
+      /** **************************************************
        *      Trident
        */
 
@@ -6416,7 +6411,7 @@ var userAgentBase = (function() {
         }
       }
 
-      /****************************************************
+      /** **************************************************
        *      Corrections
        */
 
@@ -6489,7 +6484,7 @@ var userAgentBase = (function() {
         this.os.version = null;
       }
 
-      /****************************************************
+      /** **************************************************
        *      Camouflage
        */
 
@@ -6772,9 +6767,9 @@ var userAgentBase = (function() {
 
   function parseVersion(version) {
     version = version.toString();
-    var components = version.split('.');
-    var major = components.shift();
-    return parseFloat(major + '.' + components.join(''));
+    const components = version.split('.');
+    const major = components.shift();
+    return parseFloat(`${major}.${components.join('')}`);
   }
 
   return Detected;

@@ -11,7 +11,7 @@ const projectConfig = require('../src/configs/index');
 
 const env = {
   hot_server_host: 'localhost',
-  hot_server_port: 5591,
+  hot_server_port: 5590,
 };
 
 const loaders = [

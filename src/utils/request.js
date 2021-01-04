@@ -27,6 +27,6 @@ export default function request(api, options) {
   return fetch(api, options)
     .then(checkStatus)
     .then(parseJSON)
-    .then((data) => ({ data }))
-    .catch((err) => ({ err }));
+    .then(data => ({ data }))
+    .catch(err => ({ err }));
 }

@@ -5,7 +5,7 @@ import configs from '../configs';
 const baseStorage = window.Storage;
 const { parse, stringify } = JSON;
 
-baseStorage.prototype.set = function (key, value, expired) {
+baseStorage.prototype.set = function(key, value, expired) {
   const wrapped = {
     data: value,
   };
@@ -15,7 +15,7 @@ baseStorage.prototype.set = function (key, value, expired) {
   this.setItem(`${this.namespace}_${key}`, stringify(wrapped));
 };
 
-baseStorage.prototype.get = function (key) {
+baseStorage.prototype.get = function(key) {
   const string = this.getItem(`${this.namespace}_${key}`);
   const wrapped = parse(string);
   let result = null;
@@ -30,11 +30,11 @@ baseStorage.prototype.get = function (key) {
   return result;
 };
 
-baseStorage.prototype.remove = function (key) {
+baseStorage.prototype.remove = function(key) {
   this.removeItem(`${this.namespace}_${key}`);
 };
 
-baseStorage.prototype.retrieve = function (key, expired, success, fail) {
+baseStorage.prototype.retrieve = function(key, expired, success, fail) {
   const self = this;
   const data = this.get(key);
   const saveOpts = {
@@ -44,7 +44,7 @@ baseStorage.prototype.retrieve = function (key, expired, success, fail) {
   if (data) {
     success(data, saveOpts); // true means isCache
   } else {
-    fail((res) => {
+    fail(res => {
       if (res) {
         self.set(key, res, expired);
       }
@@ -52,7 +52,7 @@ baseStorage.prototype.retrieve = function (key, expired, success, fail) {
   }
 };
 
-baseStorage.prototype.isExpired = function (wrapped) {
+baseStorage.prototype.isExpired = function(wrapped) {
   const currentTime = new Date().getTime();
 
   if (wrapped.expired) {
@@ -63,11 +63,11 @@ baseStorage.prototype.isExpired = function (wrapped) {
   return false;
 };
 
-baseStorage.prototype.setNamespace = function (namespace) {
+baseStorage.prototype.setNamespace = function(namespace) {
   baseStorage.prototype.namespace = namespace || configs.storageNameSpace;
 };
 
-baseStorage.getStorage = function (name) {
+baseStorage.getStorage = function(name) {
   if (name === 'session') {
     return sessionStorage;
   }

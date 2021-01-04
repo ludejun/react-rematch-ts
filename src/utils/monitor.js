@@ -1,8 +1,8 @@
-import userAgent from './userAgent';
+import UserAgent from './userAgent';
 import getIP from './ip';
 
 class Monitor {
-  constructor(props) {
+  constructor() {
     this.version = '1.0.0'; // SDK版本号
   }
 
@@ -34,12 +34,9 @@ class Monitor {
         if (!macLocal) {
           this.maccode = macLocal;
         } else {
-          this.maccode =
-            String(Date.now()) +
-            '-' +
-            Math.floor(1e7 * Math.random()) +
-            '-' +
-            Math.random().toString(16).replace('.', '');
+          this.maccode = `${String(Date.now())}-${Math.floor(1e7 * Math.random())}-${Math.random()
+            .toString(16)
+            .replace('.', '')}`;
           window.localStorage.setItem('maccode', this.maccode);
         }
       }
@@ -67,12 +64,15 @@ class Monitor {
       if (this.ip && this.baseInfo.ip === undefined) {
         this.baseInfo.ip = this.ip;
       }
-      var request = new XMLHttpRequest();
+      const request = new XMLHttpRequest();
       request.responseType = 'blob';
       request.open('get', this.apiServer, true);
-      request.setRequestHeader(this.storageName, encodeURIComponent(JSON.stringify({...this.baseInfo, ev: this.ev})));
-      request.onreadystatechange = (e) => {
-        if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+      request.setRequestHeader(
+        this.storageName,
+        encodeURIComponent(JSON.stringify({ ...this.baseInfo, ev: this.ev })),
+      );
+      request.onreadystatechange = () => {
+        if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
           // 成功送达则清除数据
           this.ev = [];
           window.localStorage.setItem(this.storageName, '[]');
@@ -104,7 +104,7 @@ class Monitor {
   }
 
   // 子日志生成装饰器
-  track({id = '', type = 'PV', custom}) {
+  track({ id = '', type = 'PV', custom }) {
     const self = this;
     if (type && id) {
       return function decorator(...target) {
@@ -116,25 +116,26 @@ class Monitor {
 
         return self.trackEventMethodDecorator(type, id, custom)(...target);
       };
-    } else {
-      console.error('[Monitor报错]：埋点需要埋点类型和事件ID');
     }
+    console.error('[Monitor报错]：埋点需要埋点类型和事件ID');
   }
 
   // Class装饰器
-  withTrackingComponentDecorator(type, id, options = {}) {
+  withTrackingComponentDecorator(type, id) {
     const self = this;
     // target为装饰的Class组件
-    return (target) => {
+    return target => {
       // const decoratedComponentName = target.displayName || target.name || 'Component';
       // PV点，监听组件componentDidMount
       if (target.prototype.componentDidMount) {
         const didMount = target.prototype.componentDidMount;
+        // eslint-disable-next-line
         target.prototype.componentDidMount = function() {
           self.processLogSerial(type, id);
           didMount();
         };
       } else {
+        // eslint-disable-next-line
         target.prototype.componentDidMount = function() {
           self.processLogSerial(type, id);
         };
@@ -143,12 +144,14 @@ class Monitor {
       // PE点，监听组件componentWillUnmount
       if (target.prototype.componentWillUnmount) {
         const willUnMount = target.prototype.componentWillUnmount;
+        // eslint-disable-next-line
         target.prototype.componentWillUnmount = function() {
           self.processLogSerial(type === 'PV' ? 'PE' : 'AE', id); // 如果装饰器type为PV，则这里埋PE点；如type为AS，则这里为AE
           self.sendLog(); // 在页面或APP卸载时发送所有存在的日志
           willUnMount();
         };
       } else {
+        // eslint-disable-next-line
         target.prototype.componentWillUnmount = function() {
           self.processLogSerial(type === 'PV' ? 'PE' : 'AE', id);
           self.sendLog(); // 在页面或APP卸载时发送所有存在的日志
@@ -163,10 +166,11 @@ class Monitor {
     return (target, name, describe) => {
       console.log(target, name, describe);
       const fn = describe.value;
+      // eslint-disable-next-line
       describe.value = () => {
         self.processLogSerial(type, id, custom);
         fn();
-      }
+      };
     };
   }
 
@@ -183,8 +187,10 @@ class Monitor {
     }
     // 设备指纹
     const ua = window.navigator.userAgent;
-    const device = new userAgent(ua);
-    getIP((ip) => this.ip = ip);
+    const device = new UserAgent(ua);
+    getIP(ip => {
+      this.ip = ip;
+    });
     this.deviceInfo = {
       ua, // 客户端的user agent
       os: device.os && device.os.name, // 根据UA计算，操作系统
@@ -213,13 +219,28 @@ class Monitor {
   }
 
   // 变更用户信息
-  setUser() {}
+  setUser(custno) {
+    this.custno = custno;
+    this.baseInfo = { ...this.baseInfo, custno };
+  }
 
   // 设置流量来源
-  setUTM() {}
+  setUTM(source) {
+    this.utm = source;
+    this.baseInfo = { ...this.baseInfo, utm: source };
+  }
 
   // 设置设备指纹，当项目在如APP能通过JSBridge获取时，可以自定义设置设备指纹信息
-  setDeviceInfo() {}
+  setDeviceInfo(deviceInfo) {
+    this.deviceInfo = {
+      ...this.deviceInfo,
+      ...deviceInfo,
+    };
+    this.baseInfo = {
+      ...this.baseInfo,
+      ...this.deviceInfo,
+    };
+  }
 }
 
 export default new Monitor();

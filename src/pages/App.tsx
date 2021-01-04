@@ -13,7 +13,7 @@ interface IAppProps {
   incrementAsync?: () => void;
 }
 
-@monitor.track({type: 'PV', id: '1111'})
+@monitor.track({ type: 'PV', id: '1111' })
 class App extends React.Component<IAppProps, {}> {
   constructor(props: IAppProps) {
     super(props);

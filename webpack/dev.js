@@ -79,7 +79,7 @@ const config = {
     filename: '[name].[hash].js',
     // 如有使用import()动态加载的代码打包
     chunkFilename: '[name].bundle.js',
-    // publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
+    publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
   },
 
   // What information should be printed to the console

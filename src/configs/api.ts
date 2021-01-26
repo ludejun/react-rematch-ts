@@ -5,11 +5,6 @@ declare var process: {
     NODE_ENV: string;
   };
 };
-declare global {
-  interface Window {
-    __MOCK: boolean;
-  }
-}
 
 // API对应url配置
 export const apiConfig: { [key: string]: string } = {
@@ -19,7 +14,7 @@ export const apiConfig: { [key: string]: string } = {
 // 真实环境请求的url
 export function apiURL(type: string) {
   if (apiConfig[type] && apiConfig[type].length > 0) {
-    if (window.__MOCK && configs.mockWhiteList.indexOf(apiConfig[type]) >= 0) {
+    if (__MOCK && configs.mockWhiteList.indexOf(apiConfig[type]) >= 0) {
       return `${configs.apiServer['mock']}${apiConfig[type]}`; // Mock服务器代理
     }
     return `${configs.apiServer[process.env.NODE_ENV]}${apiConfig[type]}`;
@@ -35,7 +30,7 @@ export function ajaxGetOptions() {}
 export function ajaxPostOptions(data: any, header = {}): object {
   return {
     method: 'POST',
-    header: {
+    headers: {
       'Content-Type': 'application/json',
       ...header,
     },

@@ -9,15 +9,7 @@ class Monitor {
   }
 
   // 初始化
-  init({
-    appName,
-    appVersion,
-    headerName,
-    apiUrl,
-    maxStorage,
-    custno,
-    maccode
-  }) {
+  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode }) {
     this.storageName = headerName || '__ReactMonitorLogs'; // 持久存储Key、日志发送的Header Key
     this.maxStorage = maxStorage || 5; // 日志最大存储量
     this.ev = []; // 存储事件日志
@@ -26,9 +18,7 @@ class Monitor {
     this.appName = appName || '';
     this.appVersion = appVersion || '';
     if (!this.apiServer) {
-      console.error(
-        '[Monitor报错]：埋点方法需要上报服务端URL，一般为请求1*1gif'
-      );
+      console.error('[Monitor报错]：埋点方法需要上报服务端URL，一般为请求1*1gif');
     }
 
     try {
@@ -46,9 +36,7 @@ class Monitor {
         if (!macLocal) {
           this.maccode = macLocal;
         } else {
-          this.maccode = `${String(Date.now())}-${Math.floor(
-            1e7 * Math.random()
-          )}-${Math.random()
+          this.maccode = `${String(Date.now())}-${Math.floor(1e7 * Math.random())}-${Math.random()
             .toString(16)
             .replace('.', '')}`;
           window.localStorage.setItem('maccode', this.maccode);
@@ -84,10 +72,7 @@ class Monitor {
           encodeURIComponent(JSON.stringify({ ...this.baseInfo, ev: this.ev })),
         ); */
         request.onreadystatechange = () => {
-          if (
-            request.readyState === XMLHttpRequest.DONE &&
-            request.status === 200
-          ) {
+          if (request.readyState === XMLHttpRequest.DONE && request.status === 200) {
             // 成功送达则清除数据
             this.ev = [];
             window.localStorage.setItem(this.storageName, '[]');
@@ -96,9 +81,7 @@ class Monitor {
             // console.error('[Monitor报错]：埋点上报不成功');
           }
         };
-        request.send(
-          JSON.stringify({ loyalvalleylog: { ...this.baseInfo, ev: this.ev } })
-        );
+        request.send(JSON.stringify({ loyalvalleylog: { ...this.baseInfo, ev: this.ev } }));
       }
     } catch (e) {
       console.log('[Monitor报错]', e);
@@ -112,7 +95,7 @@ class Monitor {
         type,
         ts: new Date().getTime(),
         id,
-        custom // TODO，没有不上报
+        custom, // TODO，没有不上报
       });
       window.localStorage.setItem(this.storageName, JSON.stringify(this.ev));
       if (this.ev.length >= this.maxStorage) {
@@ -132,11 +115,7 @@ class Monitor {
         console.log(this);
         if (target.length === 1) {
           // 装饰Class
-          return self.withTrackingComponentDecorator(
-            type,
-            id,
-            custom
-          )(...target);
+          return self.withTrackingComponentDecorator(type, id, custom)(...target);
         }
 
         return self.trackEventMethodDecorator(type, id, custom)(...target);
@@ -225,9 +204,7 @@ class Monitor {
     if (!this.baseInfo) {
       // 用户
       if (this.custno === '') {
-        this.custno =
-          (JSON.parse(window.localStorage.getItem('userInfo')) || {}).custno ||
-          null;
+        this.custno = (JSON.parse(window.localStorage.getItem('userInfo')) || {}).custno || null;
       }
       // 设备指纹
       const ua = window.navigator.userAgent;
@@ -238,11 +215,8 @@ class Monitor {
         osv: device.os && device.os.version && device.os.version.alias, // 根据UA计算，操作系统版本
         dt: device.device && device.device.type, // 设备类型
         bt: device.browser && device.browser.name, // 浏览器类型
-        btv:
-          device.browser &&
-          device.browser.version &&
-          device.browser.version.original, // 浏览器版本
-        maccode: this.maccode
+        btv: device.browser && device.browser.version && device.browser.version.original, // 浏览器版本
+        maccode: this.maccode,
       };
 
       this.baseInfo = {
@@ -256,12 +230,9 @@ class Monitor {
         title: document.title || '',
         domain: document.domain || '',
         url: document.URL,
-        sc:
-          window &&
-          window.screen &&
-          `${window.screen.width}X${window.screen.height}`, // 屏幕尺寸/分辨率
+        sc: window && window.screen && `${window.screen.width}X${window.screen.height}`, // 屏幕尺寸/分辨率
         dpi: window.devicePixelRatio || '', // 设备像素比
-        accptmd: '1' // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
+        accptmd: '1', // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
       };
     }
   }
@@ -282,11 +253,11 @@ class Monitor {
   setDeviceInfo(deviceInfo) {
     this.deviceInfo = {
       ...this.deviceInfo,
-      ...deviceInfo
+      ...deviceInfo,
     };
     this.baseInfo = {
       ...this.baseInfo,
-      ...this.deviceInfo
+      ...this.deviceInfo,
     };
   }
 }

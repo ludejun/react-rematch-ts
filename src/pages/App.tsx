@@ -8,7 +8,7 @@ import logo from './logo.svg';
 import './App.less';
 
 interface IAppProps {
-  count?: number;
+  number?: number;
   increment?: () => void;
   incrementAsync?: () => void;
 }
@@ -25,8 +25,17 @@ class App extends React.Component<IAppProps, {}> {
     console.log('LogClick');
   }
 
+  incrementAsync = () => {
+    this.props.increment({
+      params: {
+        num: 1,
+      },
+      apiName: 'login',
+    });
+  };
+
   render() {
-    const { increment, incrementAsync } = this.props;
+    const { increment } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -43,8 +52,8 @@ class App extends React.Component<IAppProps, {}> {
             Learn React
           </a>
           <button onClick={this.onLogClick}>点击日志测试</button>
-          <p>计数中：{this.props.count}</p>
-          <Count onAddClick={increment} onAddAsyncClick={incrementAsync} />
+          <p>计数中：{this.props.number}</p>
+          <Count onAddClick={increment} onAddAsyncClick={this.incrementAsync} />
 
           <Link to="/login" style={{ marginTop: 20 }}>
             到登陆页
@@ -56,11 +65,15 @@ class App extends React.Component<IAppProps, {}> {
 }
 
 const mapStateToProps = ({ count }: RootState) => ({
-  count,
+  number: count.number,
 });
 const mapDispatchToProps = ({ count: { increment, incrementAsync } }: Dispatch) => ({
-  increment: () => increment(1),
-  incrementAsync: () => incrementAsync(1),
+  increment,
+  incrementAsync,
 });
+// const mapDispatchToProps = (dispatch: Dispatch) => {
+//   console.log(2222, dispatch);
+//   dispatch({type: 'count/increment', })
+// };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

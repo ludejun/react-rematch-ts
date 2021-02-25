@@ -5,7 +5,8 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 const projectConfig = require('../src/configs/index');
 
 const loaders = [
@@ -15,38 +16,42 @@ const loaders = [
     use: {
       loader: 'babel-loader',
       options: {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
+        presets: ['@babel/preset-env', '@babel/preset-react']
         // plugins: [['import', { libraryName: 'antd', style: 'css' }]], // `style: true` 会加载 less 文件
-      },
-    },
+      }
+    }
   },
   {
     test: /\.tsx?$/,
     exclude: /node_modules/,
     loader: 'babel-loader',
     options: {
-      presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+      presets: [
+        '@babel/preset-env',
+        '@babel/preset-react',
+        '@babel/preset-typescript'
+      ]
       // plugins: [['import', { libraryName: 'antd', style: 'css' }]],
-    },
+    }
   }, // 先解析ts和tsx，rule规则从下往上
-  {
-    test: /\.json$/,
-    exclude: /node_modules/,
-    use: ['json-loader'],
-  },
   {
     test: /\.css$/,
     use: [
       {
         loader: MiniCssExtractPlugin.loader,
-        options: {},
+        options: {}
       },
-      'css-loader',
-    ],
+      'css-loader'
+    ]
   },
   {
     test: /\.less$/,
-    use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+      'less-loader'
+    ]
   },
   {
     test: /\.(png|svg|jpg|gif)$/,
@@ -54,10 +59,10 @@ const loaders = [
       {
         loader: 'file-loader',
         options: {
-          name: '/static/[name]-[hash].[ext]',
-        },
-      },
-    ],
+          name: '/static/[name]-[hash].[ext]'
+        }
+      }
+    ]
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -65,11 +70,11 @@ const loaders = [
       {
         loader: 'file-loader',
         options: {
-          name: '/static/[name]-[hash].[ext]',
-        },
-      },
-    ],
-  },
+          name: '/static/[name]-[hash].[ext]'
+        }
+      }
+    ]
+  }
 ];
 
 const config = {
@@ -86,7 +91,8 @@ const config = {
     // 如使用CDN
     // publicPath: "http://cdn.example.com/assets/[hash]/"
     // 如有使用import()动态加载的代码打包
-    chunkFilename: '[name].bundle.js'
+    chunkFilename: '[name].bundle.js',
+    // publicPath: projectConfig.staticUrl[process.env.NODE_ENV] // 生产要用
   },
 
   module: {
@@ -98,9 +104,10 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('prod')
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV) || JSON.stringify('prod')
       },
-      __MOCK: false,
+      // __NODE_ENV: JSON.stringify(process.env.NODE_ENV) || JSON.stringify('prod'),
+      __MOCK: false
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['release']
@@ -123,7 +130,8 @@ const config = {
       },
       template: path.join(__dirname, '../public/index.html'),
       hash: true,
-      alwaysWriteToDisk: true
+      alwaysWriteToDisk: true,
+      favicon: path.join(__dirname, '../public/favicon.ico')
     }),
     // new webpack.optimize.OccurenceOrderPlugin(),
     new MiniCssExtractPlugin({
@@ -138,8 +146,8 @@ const config = {
     //     screw_ie8: true,
     //   },
     // }),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new BundleAnalyzerPlugin({ analyzerPort: 5593 })
+    new webpack.optimize.AggressiveMergingPlugin()
+    // new BundleAnalyzerPlugin({ analyzerPort: 5593 }),
   ],
 
   // // 防止将某个模块打包到bundle中，如从CDN引入react而不是将它打包

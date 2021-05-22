@@ -91,7 +91,7 @@ const config = {
     // 如使用CDN
     // publicPath: "http://cdn.example.com/assets/[hash]/"
     // 如有使用import()动态加载的代码打包
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js'
     // publicPath: projectConfig.staticUrl[process.env.NODE_ENV] // 生产要用
   },
 
@@ -173,10 +173,16 @@ const config = {
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
+        cached: {
+          test: /[\\/]node_modules[\\/](react|react-dom|core-js)[\\/]/,
+          chunks: 'all',
+          name: 'cached',
+          filename: 'cached.bundle.js' // 直接写死文件名，不加hash
+        },
         vendors: {
+          // 在output中加hash
           test: /[\\/]node_modules[\\/]/,
           priority: -10
-          // filename: '[name].bundle.js'
         },
         default: {
           minChunks: 2,

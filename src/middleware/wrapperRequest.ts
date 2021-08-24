@@ -1,4 +1,4 @@
-const isPromise = promise => typeof (promise || {}).then === 'function';
+export const isPromise = promise => typeof (promise || {}).then === 'function';
 
 export const wrapperRequest = ({
   fetch,
@@ -63,7 +63,6 @@ export const wrapperRequest = ({
         errorCallback && errorCallback();
         Promise.reject(error);
       });
-  } else {
-    return next(action);
   }
+  return next(action);
 };

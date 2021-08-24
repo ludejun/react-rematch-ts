@@ -2,6 +2,7 @@
 import React from 'react';
 import UserAgent from './userAgent';
 import getIP from './ip';
+import { isAndroidOrIOS } from './index.ts';
 
 class Monitor {
   constructor() {
@@ -9,7 +10,7 @@ class Monitor {
   }
 
   // 初始化
-  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode }) {
+  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode, accptMd }) {
     this.storageName = headerName || '__ReactMonitorLogs'; // 持久存储Key、日志发送的Header Key
     this.maxStorage = maxStorage || 5; // 日志最大存储量
     this.ev = []; // 存储事件日志
@@ -17,6 +18,7 @@ class Monitor {
     this.custno = custno || '';
     this.appName = appName || '';
     this.appVersion = appVersion || '';
+    this.accptMd = accptMd || '';
     if (!this.apiServer) {
       console.error('[Monitor报错]：埋点方法需要上报服务端URL，一般为请求1*1gif');
     }
@@ -33,7 +35,7 @@ class Monitor {
         this.maccode = maccode;
       } else {
         const macLocal = window.localStorage.getItem('maccode');
-        if (!macLocal) {
+        if (macLocal) {
           this.maccode = macLocal;
         } else {
           this.maccode = `${String(Date.now())}-${Math.floor(1e7 * Math.random())}-${Math.random()
@@ -54,15 +56,18 @@ class Monitor {
     }
 
     this.generateNormal(); // 生成外层通用字段
+    getIP(ip => {
+      this.baseInfo.ip = ip;
+    });
   }
 
   // 发送日志
-  async sendLog() {
+  sendLog() {
     try {
       if (this.ev.length > 0) {
         // 当this.baseInfo中无IP信息
         if (!this.baseInfo.ip) {
-          this.baseInfo.ip = await getIP();
+          this.baseInfo.ip = getIP(ip => (this.baseInfo.ip = ip));
         }
         const request = new XMLHttpRequest();
         // request.responseType = 'blob';
@@ -89,7 +94,7 @@ class Monitor {
   }
 
   // 整合日志
-  processLogSerial(type, id, custom) {
+  processLogSerial(type, id, custom, force) {
     if (this.ev && Array.isArray(this.ev)) {
       this.ev.push({
         type,
@@ -98,7 +103,7 @@ class Monitor {
         custom, // TODO，没有不上报
       });
       window.localStorage.setItem(this.storageName, JSON.stringify(this.ev));
-      if (this.ev.length >= this.maxStorage) {
+      if (this.ev.length >= this.maxStorage || force) {
         this.sendLog();
       }
     } else {
@@ -194,9 +199,9 @@ class Monitor {
     };
   }
 
-  // 事件日志侵入生成
-  trackEv(type, id, custom) {
-    this.processLogSerial(type, id, custom);
+  // 事件日志侵入生成， force表示是否强制立即推送
+  trackEv(type, id, custom, force = false) {
+    this.processLogSerial(type, id, custom, force);
   }
 
   // 通用字段配置
@@ -218,6 +223,13 @@ class Monitor {
         btv: device.browser && device.browser.version && device.browser.version.original, // 浏览器版本
         maccode: this.maccode,
       };
+      if (!this.accptMd) {
+        if (window.deviceInfo && window.deviceInfo.os) {
+          this.accptmd = (window.deviceInfo || {}).os.toLowerCase() === 'ios' ? '2' : '3';
+        } else {
+          this.accptmd = isAndroidOrIOS() === 'android' ? '3' : '2';
+        }
+      }
 
       this.baseInfo = {
         custno: this.custno,
@@ -232,7 +244,7 @@ class Monitor {
         url: document.URL,
         sc: window && window.screen && `${window.screen.width}X${window.screen.height}`, // 屏幕尺寸/分辨率
         dpi: window.devicePixelRatio || '', // 设备像素比
-        accptmd: '1', // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
+        accptmd: this.accptMd, // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
       };
     }
   }

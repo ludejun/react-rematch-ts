@@ -3,7 +3,7 @@ export default function getIP(cb) {
   const newJs = document.createElement('script');
   try {
     document.body.appendChild(newJs);
-    newJs.src = 'http://pv.sohu.com/cityjson';
+    newJs.src = '//pv.sohu.com/cityjson';
   } catch (err) {
     console.log('创建script标签失败');
   }

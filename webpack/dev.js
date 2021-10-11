@@ -66,7 +66,6 @@ const config = {
   },
 
   entry: [
-    '@babel/polyfill',
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${env.hot_server_host}:${env.hot_server_port}`,
     'webpack/hot/only-dev-server',

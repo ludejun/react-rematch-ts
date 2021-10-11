@@ -1,4 +1,5 @@
-import '@babel/polyfill';
+// import '@babel/polyfill';
+import 'core-js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';

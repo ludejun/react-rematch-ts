@@ -31,7 +31,7 @@ export const wrapperRequest = ({
     };
   }
 
-  if (url && options && isPromise(fetch(url, options))) {
+  if (url && options) {
     next({
       type: action.type,
       payload: {
@@ -50,6 +50,7 @@ export const wrapperRequest = ({
             status: 'success',
           },
         });
+        return data;
       })
       .catch(error => {
         next({

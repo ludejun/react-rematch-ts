@@ -7,9 +7,8 @@ import request from './utils/request';
 const promiseMiddlewareConfig = {
   fetch: request,
   urlProc: (apiName: string) => apiURL(apiName),
-  fetchOptionsProc: (data: any, header = {}, method = 'POST') => (method === 'POST'
-    ? ajaxPostOptions(data, header)
-    : ajaxGetOptions(data, header)),
+  fetchOptionsProc: (data: any, header = {}, method = 'POST') =>
+    method === 'POST' ? ajaxPostOptions(data, header) : ajaxGetOptions(data, header),
   errorCallback: () => console.log('攻城狮开小差了，请稍后重试～'),
 };
 

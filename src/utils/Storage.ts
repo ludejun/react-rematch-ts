@@ -33,12 +33,7 @@ baseStorage.prototype.remove = function(key: any) {
   this.removeItem(`${this.namespace}_${key}`);
 };
 
-baseStorage.prototype.retrieve = function(
-  key: any,
-  expired: any,
-  success: any,
-  fail: any,
-) {
+baseStorage.prototype.retrieve = function(key: any, expired: any, success: any, fail: any) {
   const self = this;
   const data = this.get(key);
   const saveOpts = {

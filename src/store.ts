@@ -1,14 +1,15 @@
 import { init, RematchRootState } from '@rematch/core';
-import { apiConfig, ajaxPostOptions, ajaxGetOptions } from './configs/api';
+import { apiURL, ajaxPostOptions, ajaxGetOptions } from './configs/api';
 import { wrapperRequest } from './middleware/wrapperRequest';
 import * as models from './models';
 import request from './utils/request';
 
 const promiseMiddlewareConfig = {
   fetch: request,
-  urlProc: apiName => apiConfig[apiName],
-  fetchOptionsProc: (data, header = {}, method = 'POST') =>
-    method === 'POST' ? ajaxPostOptions(data, header) : ajaxGetOptions(data, header),
+  urlProc: (apiName: string) => apiURL(apiName),
+  fetchOptionsProc: (data: any, header = {}, method = 'POST') => (method === 'POST'
+    ? ajaxPostOptions(data, header)
+    : ajaxGetOptions(data, header)),
   errorCallback: () => console.log('攻城狮开小差了，请稍后重试～'),
 };
 

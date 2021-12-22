@@ -1,7 +1,9 @@
 import { fetch } from 'whatwg-fetch';
 import configs from '../configs';
-// eslint-disable-next-line
-process.env.NODE_ENV === 'dev' && require('../../mock/index');
+
+// // eslint-disable-next-line
+// 如果想用本地Mockjs，可以将下面的注释打开
+// process.env.NODE_ENV === 'dev' && require('../../mock/index');
 
 function parseJSON(response) {
   return response.json();

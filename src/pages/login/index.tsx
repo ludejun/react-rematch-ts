@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch, RootState } from '../../store';
-import Storage from '../../utils/Storage';
+import { DispatchPro, RootState } from '@/store';
+import Storage from '@/utils/Storage';
 import './index.less';
 
-interface ILoginProps {
-  isAuth?: boolean;
-  isLogining?: boolean;
-  userInfo?: any;
-  fetchLogin?: (payload: object) => void;
-}
-
-class Login extends React.Component<ILoginProps, {}> {
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = ReturnType<typeof mapDispatchToProps>;
+type ILoginProps = StateProps & DispatchProps;
+class Login extends React.Component<ILoginProps> {
   constructor(props: ILoginProps) {
     super(props);
   }
@@ -19,20 +15,19 @@ class Login extends React.Component<ILoginProps, {}> {
   onLoginClick() {
     const { fetchLogin } = this.props;
 
-    fetchLogin &&
-      fetchLogin({
-        data: {
-          loginName: '',
-          loginPwd: '***',
-        },
-        cb: (userInfo: object) => {
-          Storage.set('userinfo', userInfo);
-        },
-      });
+    fetchLogin({
+      data: {
+        loginName: '',
+        loginPwd: '***'
+      },
+      cb: (userInfo: object) => {
+        Storage.set('userinfo', userInfo);
+      }
+    });
   }
 
   render() {
-    const { isAuth, isLogining, userInfo, fetchLogin } = this.props;
+    const { isAuth, isLogining, userInfo } = this.props;
     return (
       <div className="login">
         <button onClick={() => this.onLoginClick()}>登陆</button>
@@ -48,10 +43,10 @@ class Login extends React.Component<ILoginProps, {}> {
 const mapStateToProps = ({ user }: RootState) => ({
   isAuth: user.isAuth,
   isLogining: user.isLogining,
-  userInfo: user.userInfo,
+  userInfo: user.userInfo
 });
-const mapDispatchToProps = ({ user: { fetchLogin } }: Dispatch) => ({
-  fetchLogin,
+const mapDispatchToProps = ({ user: { fetchLogin } }: DispatchPro): any => ({
+  fetchLogin
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

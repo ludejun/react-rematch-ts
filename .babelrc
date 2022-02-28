@@ -21,6 +21,6 @@
     ],
     "@babel/plugin-proposal-class-properties",
     "react-hot-loader/babel",
-    "@babel/transform-runtime"
+    ["@babel/plugin-transform-runtime", { "corejs": 3 }]
   ]
 }

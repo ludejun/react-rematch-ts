@@ -2,19 +2,17 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Count from './components/Count';
-import { Dispatch, RootState } from '../store';
+import { DispatchPro, RootState } from '../store';
 import monitor from '../utils/monitor';
 import logo from './logo.svg';
 import './App.less';
 
-interface IAppProps {
-  number?: number;
-  increment?: () => void;
-  incrementAsync?: () => void;
-}
+type StateProps = ReturnType<typeof mapStateToProps>;
+type DispatchProps = ReturnType<typeof mapDispatchToProps>;
+type IAppProps = StateProps & DispatchProps;
 
-@monitor.track({ type: 'PV', id: '1111' })
-class App extends React.Component<IAppProps, {}> {
+// @monitor.track({ type: 'PV', id: '1111' })
+class App extends React.Component<IAppProps> {
   constructor(props: IAppProps) {
     super(props);
   }
@@ -26,11 +24,11 @@ class App extends React.Component<IAppProps, {}> {
   }
 
   incrementAsync = () => {
-    this.props.increment({
+    this.props.incrementAsync({
       params: {
-        num: 1,
+        num: 1
       },
-      apiName: 'login',
+      apiName: 'count'
     });
   };
 
@@ -65,11 +63,11 @@ class App extends React.Component<IAppProps, {}> {
 }
 
 const mapStateToProps = ({ count }: RootState) => ({
-  number: count.number,
+  number: count.number
 });
-const mapDispatchToProps = ({ count: { increment, incrementAsync } }: Dispatch) => ({
+const mapDispatchToProps = ({ count: { increment, incrementAsync } }: DispatchPro): any => ({
   increment,
-  incrementAsync,
+  incrementAsync
 });
 // const mapDispatchToProps = (dispatch: Dispatch) => {
 //   console.log(2222, dispatch);

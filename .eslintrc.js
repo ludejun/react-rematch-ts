@@ -1,36 +1,65 @@
 module.exports = {
   env: {
     browser: true,
-    node: true,
+    node: true
   },
-  parser: 'babel-eslint',
-  extends: 'airbnb',
-  plugins: ['react'],
+  parser: '@typescript-eslint/parser',
+  extends: [
+    'eslint:recommended',
+    'plugin:import/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier'
+  ],
+  plugins: [
+    'react',
+    'import',
+    'import-alias',
+    '@typescript-eslint',
+    'prettier'
+  ],
   rules: {
-    'react/jsx-filename-extension': 0,
+    '@typescript-eslint/no-unused-vars': 'error',
+    '@typescript-eslint/no-array-constructor': 'error',
+    '@typescript-eslint/no-duplicate-imports': 'error',
+    '@typescript-eslint/no-shadow': 'error',
+    '@typescript-eslint/ban-ts-comment': 'off',
+    'react/prop-types': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    'no-underscore-dangle': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'prettier/prettier': ['error', { printWidth: 100 }],
     'react/destructuring-assignment': 0,
-    'react/button-has-type': 0,
-    // 组件的属性类型也不检测
-    'react/prop-types': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/prefer-default-export': 1,
-    'consistent-return': 1,
-    // 对象包裹不检测
-    'object-curly-spacing': 0,
-    // 文件最后留一个空行
-    'eol-last': 0,
-    // "comma-dangle": ["error", "never"],
-    // 允许class中的内部方法使用_ ，其他情况默认不允许
-    'no-underscore-dangle': ['error', { allowAfterThis: true, enforceInMethodNames: false }],
-    'max-len': ['error', 120],
-    'global-require': 0,
+    'react/jsx-key': 'error',
+    'react-hooks/exhaustive-deps': 'off',
+    // 如果是class私有方法，使用private, _xxx是不推荐的写法
     'no-plusplus': 0,
-    'no-prototype-builtins': 0,
-    'no-restricted-syntax': 0,
-    // "jsx-a11y/anchor-has-content": [ 2, { "components": [ "Anchor" ], }],
-    'operator-linebreak': 0,
-    'arrow-parens': ['error', 'as-needed'],
-    'space-before-function-paren': ['error', 'never'],
-    "object-curly-newline": 0,
+    'import/no-deprecated': 'error',
+    // 'max-len': ['error', { code: 100 }],
+    'import-alias/import-alias': [
+      'error',
+      {
+        relativeDepth: 1,
+        rootDir: __dirname,
+        aliases: [
+          {
+            alias: '@',
+            matcher: './src'
+          }
+        ]
+      }
+    ]
   },
+  settings: {
+    react: {
+      version: 'detect'
+    },
+    'import/resolver': {
+      alias: {
+        map: [['@', './src']],
+        extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts']
+      }
+    }
+  }
 };

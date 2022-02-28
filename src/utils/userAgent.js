@@ -374,7 +374,7 @@ export default function(ua) {
           SM705: 'T1',
           SM701: 'T1',
           YQ601: 'U1',
-          YQ603: 'U1',
+          YQ603: 'U1'
         }[match[1]] || match[1];
     }
     // handle Asus
@@ -466,7 +466,7 @@ export default function(ua) {
             'SCH-I86': 'GT-I855',
             'SCH-N71': 'GT-N710',
             'SCH-I73': 'GT-S789',
-            'SCH-P70': 'GT-I915',
+            'SCH-P70': 'GT-I915'
           }[uaData.device.model] || uaData.device.model;
       } else if (uaData.device.manufacturer === 'Huawei') {
         uaData.device.model =
@@ -474,7 +474,7 @@ export default function(ua) {
             CHE1: 'CHE',
             CHE2: 'CHE',
             G620S: 'G621',
-            C8817D: 'G621',
+            C8817D: 'G621'
           }[uaData.device.model] || uaData.device.model;
       }
     }
@@ -500,7 +500,7 @@ export default function(ua) {
     if ((match = /360se(?:[ \/]([\w.]+))?/i.exec(ua))) {
       uaData.browser.name = '360 security Explorer';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /the world(?:[ \/]([\w.]+))?/i.exec(ua))) {
       /**
@@ -508,7 +508,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'the world';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /tencenttraveler ([\w.]+)/i.exec(ua))) {
       /**
@@ -516,7 +516,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'tencenttraveler';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /LBBROWSER/i.exec(ua))) {
       /**
@@ -531,7 +531,7 @@ export default function(ua) {
     if ((match = /BaiduHD\s+([\w.]+)/i.exec(ua))) {
       uaData.browser.name = 'BaiduHD';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /360.s*aphone\s*browser\s*\(version\s*([\w.]+)\)/i.exec(ua))) {
       /**
@@ -539,7 +539,7 @@ export default function(ua) {
        */
       uaData.browser.name = '360 Browser';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /flyflow\/([\w.]+)/i.exec(ua))) {
       /**
@@ -547,7 +547,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'Baidu Browser';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /baiduhd ([\w.]+)/i.exec(ua))) {
       /**
@@ -555,7 +555,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'Baidu HD';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /baidubrowser\/([\d\.]+)\s/i.exec(ua))) {
       /**
@@ -563,7 +563,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'baidubrowser';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /LieBaoFast\/([\w.]+)/i.exec(ua))) {
       /**
@@ -571,7 +571,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'LieBao Fast';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /LieBao\/([\w.]+)/i.exec(ua))) {
       /**
@@ -579,7 +579,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'LieBao';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /Sogou\w+\/([0-9\.]+)/i.exec(ua))) {
       /**
@@ -587,7 +587,7 @@ export default function(ua) {
        */
       uaData.browser.name = 'SogouMobileBrowser';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if ((match = /bdbrowser\w+\/([0-9\.]+)/i.exec(ua))) {
       /**
@@ -595,7 +595,7 @@ export default function(ua) {
        */
       uaData.browser.name = '百度国际';
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     } else if (
       /**
@@ -646,7 +646,7 @@ export default function(ua) {
     uaData.browser.name = '百度框';
     if (match[1]) {
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     }
     // uaData.browser.name = 'baidu box';
@@ -671,24 +671,24 @@ export default function(ua) {
       tmpVersion = tmpMatch[1];
     }
     uaData.browser.version = {
-      original: tmpVersion,
+      original: tmpVersion
     };
   }
   if ((match = /UCBrowser\/([\w.]+)/i.exec(ua))) {
     uaData.browser.name = 'UC Browser';
     uaData.browser.version = {
-      original: match[1],
+      original: match[1]
     };
   }
   if ((match = /OPR\/([\w.]+)/i.exec(ua))) {
     uaData.browser.name = 'Opera';
     uaData.browser.version = {
-      original: match[1],
+      original: match[1]
     };
   } else if ((match = /OPiOS\/([\w.]+)/i.exec(ua))) {
     uaData.browser.name = 'Opera';
     uaData.browser.version = {
-      original: match[1],
+      original: match[1]
     };
   }
   // IE 11
@@ -696,7 +696,7 @@ export default function(ua) {
     uaData.browser.name = 'Internet Explorer';
     uaData.browser.version = {
       major: '11',
-      original: '11',
+      original: '11'
     };
   }
   // Microsoft Edge
@@ -704,14 +704,14 @@ export default function(ua) {
     uaData.browser.name = 'Microsoft Edge';
     uaData.browser.version = {
       major: '12',
-      original: '12',
+      original: '12'
     };
   }
   // miui browser
   else if ((match = /miuibrowser\/([\w.]+)/i.exec(ua))) {
     uaData.browser.name = 'miui browser';
     uaData.browser.version = {
-      original: match[1],
+      original: match[1]
     };
   }
   // Safari
@@ -723,7 +723,7 @@ export default function(ua) {
   if (uaData.browser.name && !uaData.browser.version) {
     if ((match = /Version\/([\w.]+)/i.exec(ua))) {
       uaData.browser.version = {
-        original: match[1],
+        original: match[1]
       };
     }
   }
@@ -740,12 +740,12 @@ export default function(ua) {
     if (/NT 6.3/i.test(ua)) {
       uaData.os.version = {
         alias: '8.1',
-        original: '8.1',
+        original: '8.1'
       };
     } else if (/NT 6.4/i.test(ua) || /NT 10.0/i.test(ua)) {
       uaData.os.version = {
         alias: '10',
-        original: '10',
+        original: '10'
       };
     }
   } else if (uaData.os.name === 'Mac OS X') {
@@ -753,19 +753,19 @@ export default function(ua) {
     if ((match = /Mac OS X[\s\_\-\/](\d+[\.\-\_]\d+[\.\-\_]?\d*)/i.exec(ua))) {
       uaData.os.version = {
         alias: match[1].replace(/_/g, '.'),
-        original: match[1].replace(/_/g, '.'),
+        original: match[1].replace(/_/g, '.')
       };
     } else {
       uaData.os.version = {
         alias: '',
-        original: '',
+        original: ''
       };
     }
   } else if (/Android/i.test(uaData.os.name)) {
     if ((match = ua.match(/Android[\s\_\-\/i686]?[\s\_\-\/](\d+[\.\-\_]\d+[\.\-\_]?\d*)/i))) {
       uaData.os.version = {
         alias: match[1],
-        original: match[1],
+        original: match[1]
       };
     }
   }
@@ -806,8 +806,8 @@ var userAgentBase = (function() {
       'GT-B3410': [STRINGS_SAMSUNG, 'Star Qwerty'],
       'GT-B5310': [STRINGS_SAMSUNG, 'Corby Pro'],
       'GT-B7722': [STRINGS_SAMSUNG, 'Star Duos'],
-      'GT-C6712': [STRINGS_SAMSUNG, 'Star II Duos'],
-    },
+      'GT-C6712': [STRINGS_SAMSUNG, 'Star II Duos']
+    }
   };
 
   const BADA_MODELS = {
@@ -832,20 +832,20 @@ var userAgentBase = (function() {
       'GT-S8500T': [STRINGS_SAMSUNG, 'Wave'],
       'GT-S8530': [STRINGS_SAMSUNG, 'Wave II'],
       'GT-S8600': [STRINGS_SAMSUNG, 'Wave 3'],
-      'SHW-M410': [STRINGS_SAMSUNG, 'Wave 3'],
-    },
+      'SHW-M410': [STRINGS_SAMSUNG, 'Wave 3']
+    }
   };
 
   const TIZEN_MODELS = {
     SAMSUNG: {
-      'GT-I9500': [STRINGS_SAMSUNG, 'GT-I9500'],
-    },
+      'GT-I9500': [STRINGS_SAMSUNG, 'GT-I9500']
+    }
   };
 
   const BREW_MODELS = {
     'Coolpad D508': [STRINGS_COOLPAD, 'D508'],
     'Coolpad E600': [STRINGS_COOLPAD, 'E600'],
-    'SCH-F839': [STRINGS_SAMSUNG, 'SCH-F839'],
+    'SCH-F839': [STRINGS_SAMSUNG, 'SCH-F839']
   };
 
   const WINDOWS_MOBILE_MODELS = {
@@ -880,25 +880,25 @@ var userAgentBase = (function() {
     'GT-i8000': [STRINGS_SAMSUNG, 'Omnia 2'],
     'GT-I8000': [STRINGS_SAMSUNG, 'Omnia 2'],
     'GT-I8000U': [STRINGS_SAMSUNG, 'Omnia 2'],
-    M1i: [STRINGS_SONY_ERICSSON, 'M1i Aspen'],
+    M1i: [STRINGS_SONY_ERICSSON, 'M1i Aspen']
   };
 
   const WINDOWS_PHONE_MODELS = {
     Acer: {
       Allegro: [STRINGS_ACER, 'Allegro'],
-      M310: [STRINGS_ACER, 'Allegro'],
+      M310: [STRINGS_ACER, 'Allegro']
     },
 
     Asus: {
-      Galaxy6: [STRINGS_ASUS, 'Galaxy 6'],
+      Galaxy6: [STRINGS_ASUS, 'Galaxy 6']
     },
 
     DELL: {
-      'Venue Pro': ['Dell', 'Venue Pro'],
+      'Venue Pro': ['Dell', 'Venue Pro']
     },
 
     FujitsuToshibaMobileCommun: {
-      IS12T: ['Fujitsu Toshiba', 'IS12T'],
+      IS12T: ['Fujitsu Toshiba', 'IS12T']
     },
 
     HTC: {
@@ -937,7 +937,7 @@ var userAgentBase = (function() {
       X310e: [STRINGS_HTC, 'Titan'],
       PI39100: [STRINGS_HTC, 'Titan'],
       PI86100: [STRINGS_HTC, 'Titan II'],
-      Ultimate: [STRINGS_HTC, 'Ultimate'],
+      Ultimate: [STRINGS_HTC, 'Ultimate']
     },
 
     LG: {
@@ -947,12 +947,12 @@ var userAgentBase = (function() {
       'LG-E900h': [STRINGS_LG, 'Optimus 7 E900'],
       'LG-C900': [STRINGS_LG, 'Optimus 7Q'],
       'LG-C900B': [STRINGS_LG, 'Quantum'],
-      'LG-C900k': [STRINGS_LG, 'Quantum'],
+      'LG-C900k': [STRINGS_LG, 'Quantum']
     },
 
     nokia: {
       SeaRay: ['Nokia', 'Lumia 800'],
-      '800C': ['Nokia', 'Lumia 800'],
+      '800C': ['Nokia', 'Lumia 800']
     },
 
     NOKIA: {
@@ -963,7 +963,7 @@ var userAgentBase = (function() {
       'Lumia 800': ['Nokia', 'Lumia 800'],
       800: ['Nokia', 'Lumia 800'],
       'Lumia 900': ['Nokia', 'Lumia 900'],
-      XXX: ['Nokia', 'prototype'],
+      XXX: ['Nokia', 'prototype']
     },
 
     SAMSUNG: {
@@ -978,12 +978,12 @@ var userAgentBase = (function() {
       'SGH-i937': [STRINGS_SAMSUNG, 'Focus S'],
       OMNIA7: [STRINGS_SAMSUNG, 'Omnia 7'],
       OMINA7: [STRINGS_SAMSUNG, 'Omnia 7'],
-      Taylor: [STRINGS_SAMSUNG, 'Taylor'],
+      Taylor: [STRINGS_SAMSUNG, 'Taylor']
     },
 
     TOSHIBA: {
-      TSUNAGI: ['Toshiba', 'Tsunagi'],
-    },
+      TSUNAGI: ['Toshiba', 'Tsunagi']
+    }
   };
 
   const ANDROID_MODELS = {
@@ -3242,7 +3242,7 @@ var userAgentBase = (function() {
     'MI 2C': ['Xiaomi', 'MI-TWO'],
     'OPPO R813T': ['Oppo', 'R813'],
     'SCH-I879': ['Samsung', 'Galaxy Note'],
-    'GT-S6102E': ['Samsung', 'Galaxy Y Duos'],
+    'GT-S6102E': ['Samsung', 'Galaxy Y Duos']
   };
 
   const BLACKBERRY_MODELS = {
@@ -3284,7 +3284,7 @@ var userAgentBase = (function() {
     9850: 'Torch',
     9860: 'Torch',
     9630: 'Tour',
-    9981: 'Porsche P',
+    9981: 'Porsche P'
   };
 
   const Version = function() {
@@ -3294,7 +3294,7 @@ var userAgentBase = (function() {
     initialize(v) {
       this.original = v.value || null;
       this.alias = v.alias || null;
-    },
+    }
   };
 
   const Detected = function() {
@@ -3304,19 +3304,19 @@ var userAgentBase = (function() {
     initialize(ua, options) {
       this.options = {
         useFeatures: (options && options.useFeatures) || false,
-        detectCamouflage: (options && options.detectCamouflage) || true,
+        detectCamouflage: (options && options.detectCamouflage) || true
       };
 
       this.browser = {
         stock: true,
         hidden: false,
-        channel: '',
+        channel: ''
       };
       this.engine = {};
       this.os = {};
       this.device = {
         type: 'desktop',
-        identified: false,
+        identified: false
       };
 
       this.camouflage = false;
@@ -3376,7 +3376,7 @@ var userAgentBase = (function() {
           this.os.name = 'CentOS';
           if ((match = /CentOS\/[0-9\.\-]+el([0-9_]+)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1].replace(/_/g, '.'),
+              value: match[1].replace(/_/g, '.')
             });
           }
         }
@@ -3389,7 +3389,7 @@ var userAgentBase = (function() {
           this.os.name = 'Fedora';
           if ((match = /Fedora\/[0-9\.\-]+fc([0-9]+)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           }
         }
@@ -3406,7 +3406,7 @@ var userAgentBase = (function() {
           this.os.name = 'Mandriva';
           if ((match = /Mandriva Linux\/[0-9\.\-]+mdv([0-9]+)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           }
         }
@@ -3415,7 +3415,7 @@ var userAgentBase = (function() {
           this.os.name = 'Mageia';
           if ((match = /Mageia\/[0-9\.\-]+mga([0-9]+)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           }
         }
@@ -3424,7 +3424,7 @@ var userAgentBase = (function() {
           this.os.name = 'Red Hat';
           if ((match = /Red Hat[^\/]*\/[0-9\.\-]+el([0-9_]+)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1].replace(/_/g, '.'),
+              value: match[1].replace(/_/g, '.')
             });
           }
         }
@@ -3445,7 +3445,7 @@ var userAgentBase = (function() {
           this.os.name = 'Ubuntu';
           if ((match = /Ubuntu\/([0-9.]*)/.exec(ua))) {
             this.os.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           }
         }
@@ -3463,12 +3463,12 @@ var userAgentBase = (function() {
       ) {
         this.os.name = 'iOS';
         this.os.version = new Version({
-          value: '1.0',
+          value: '1.0'
         });
 
         if ((match = /OS (.*) like Mac OS X/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1].replace(/_/g, '.'),
+            value: match[1].replace(/_/g, '.')
           });
         }
 
@@ -3497,7 +3497,7 @@ var userAgentBase = (function() {
 
         if ((match = /Mac OS X (10[0-9\._]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1].replace(/_/g, '.'),
+            value: match[1].replace(/_/g, '.')
           });
         }
       }
@@ -3516,43 +3516,43 @@ var userAgentBase = (function() {
             case '6.2':
               this.os.version = new Version({
                 value: match[1],
-                alias: '8',
+                alias: '8'
               });
               break;
             case '6.1':
               this.os.version = new Version({
                 value: match[1],
-                alias: '7',
+                alias: '7'
               });
               break;
             case '6.0':
               this.os.version = new Version({
                 value: match[1],
-                alias: 'Vista',
+                alias: 'Vista'
               });
               break;
             case '5.2':
               this.os.version = new Version({
                 value: match[1],
-                alias: 'Server 2003',
+                alias: 'Server 2003'
               });
               break;
             case '5.1':
               this.os.version = new Version({
                 value: match[1],
-                alias: 'XP',
+                alias: 'XP'
               });
               break;
             case '5.0':
               this.os.version = new Version({
                 value: match[1],
-                alias: '2000',
+                alias: '2000'
               });
               break;
             default:
               this.os.version = new Version({
                 value: match[1],
-                alias: `NT ${this.os.version}`,
+                alias: `NT ${this.os.version}`
               });
           }
         }
@@ -3560,28 +3560,28 @@ var userAgentBase = (function() {
         if (ua.match('Windows 95') || ua.match('Win95') || ua.match('Win 9x 4.00')) {
           this.os.version = new Version({
             value: '4.0',
-            alias: '95',
+            alias: '95'
           });
         }
 
         if (ua.match('Windows 98') || ua.match('Win98') || ua.match('Win 9x 4.10')) {
           this.os.version = new Version({
             value: '4.1',
-            alias: '98',
+            alias: '98'
           });
         }
 
         if (ua.match('Windows ME') || ua.match('WinME') || ua.match('Win 9x 4.90')) {
           this.os.version = new Version({
             value: '4.9',
-            alias: 'ME',
+            alias: 'ME'
           });
         }
 
         if (ua.match('Windows XP') || ua.match('WinXP')) {
           this.os.name = new Version({
             value: '5.1',
-            alias: 'XP',
+            alias: 'XP'
           });
         }
 
@@ -3589,7 +3589,7 @@ var userAgentBase = (function() {
           this.os.name = 'Windows Phone';
           this.os.version = new Version({
             value: '7.0',
-            details: 2,
+            details: 2
           });
           this.device.type = 'mobile';
           this.browser.mode = 'desktop';
@@ -3602,21 +3602,21 @@ var userAgentBase = (function() {
             if (ua.match(' IEMobile 8')) {
               this.os.version = new Version({
                 value: '6.5',
-                details: 2,
+                details: 2
               });
             }
 
             if (ua.match(' IEMobile 7')) {
               this.os.version = new Version({
                 value: '6.1',
-                details: 2,
+                details: 2
               });
             }
 
             if (ua.match(' IEMobile 6')) {
               this.os.version = new Version({
                 value: '6.0',
-                details: 2,
+                details: 2
               });
             }
           } else {
@@ -3625,14 +3625,14 @@ var userAgentBase = (function() {
             if ((match = /WindowsCEOS\/([0-9.]*)/.exec(ua))) {
               this.os.version = new Version({
                 value: match[1],
-                details: 2,
+                details: 2
               });
             }
 
             if ((match = /Windows CE ([0-9.]*)/.exec(ua))) {
               this.os.version = new Version({
                 value: match[1],
-                details: 2,
+                details: 2
               });
             }
           }
@@ -3649,7 +3649,7 @@ var userAgentBase = (function() {
           this.os.name = 'Windows Mobile';
           this.os.version = new Version({
             value: match[1],
-            details: 2,
+            details: 2
           });
           this.device.type = 'mobile';
         }
@@ -3658,7 +3658,7 @@ var userAgentBase = (function() {
           this.os.name = 'Windows Mobile';
           this.os.version = new Version({
             value: ua.match(/Windows Phone ([0-9.]*)/)[1],
-            details: 2,
+            details: 2
           });
           this.device.type = 'mobile';
         }
@@ -3667,7 +3667,7 @@ var userAgentBase = (function() {
           this.os.name = 'Windows Phone';
           this.os.version = new Version({
             value: ua.match(/Windows Phone OS ([0-9.]*)/)[1],
-            details: 2,
+            details: 2
           });
 
           if (this.os.version < 7) {
@@ -3716,14 +3716,14 @@ var userAgentBase = (function() {
         ) {
           this.os.version = new Version({
             value: match[1],
-            details: 3,
+            details: 3
           });
         }
 
         if (ua.match('Android Eclair')) {
           this.os.version = new Version({
             value: '2.0',
-            details: 3,
+            details: 3
           });
         }
 
@@ -3842,13 +3842,13 @@ var userAgentBase = (function() {
 
         if (ua.match('Chrome/5.')) {
           this.os.version = new Version({
-            value: '1',
+            value: '1'
           });
         }
 
         if (ua.match('Chrome/11.')) {
           this.os.version = new Version({
-            value: '2',
+            value: '2'
           });
         }
 
@@ -3864,7 +3864,7 @@ var userAgentBase = (function() {
 
         if ((match = /WoPhone\/([0-9\.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -3883,7 +3883,7 @@ var userAgentBase = (function() {
             this.device.model = match[1];
             this.os.version = new Version({
               value: match[2],
-              details: 2,
+              details: 2
             });
           }
 
@@ -3894,7 +3894,7 @@ var userAgentBase = (function() {
           if ((match = /Version\/([0-9.]*)/.exec(ua))) {
             this.os.version = new Version({
               value: match[1],
-              details: 2,
+              details: 2
             });
           }
 
@@ -3930,7 +3930,7 @@ var userAgentBase = (function() {
         this.os.name = 'BlackBerry Tablet OS';
         this.os.version = new Version({
           value: ua.match(/RIM Tablet OS ([0-9.]*)/)[1],
-          details: 2,
+          details: 2
         });
 
         this.device.manufacturer = 'RIM';
@@ -3942,7 +3942,7 @@ var userAgentBase = (function() {
           this.os.name = 'BlackBerry';
           this.os.version = new Version({
             value: match[1],
-            details: 2,
+            details: 2
           });
 
           this.device.manufacturer = 'RIM';
@@ -3959,7 +3959,7 @@ var userAgentBase = (function() {
       if (ua.match('(?:web|hpw)OS')) {
         this.os.name = 'webOS';
         this.os.version = new Version({
-          value: ua.match(/(?:web|hpw)OS\/([0-9.]*)/)[1],
+          value: ua.match(/(?:web|hpw)OS\/([0-9.]*)/)[1]
         });
 
         if (ua.match('tablet')) this.device.type = 'tablet';
@@ -3993,13 +3993,13 @@ var userAgentBase = (function() {
 
         if (ua.match('SymbianOS/9.1') && !ua.match('Series60')) {
           this.os.version = new Version({
-            value: '3.0',
+            value: '3.0'
           });
         }
 
         if ((match = /Series60\/([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4087,7 +4087,7 @@ var userAgentBase = (function() {
 
         if ((match = /Tizen[\/ ]([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4122,7 +4122,7 @@ var userAgentBase = (function() {
 
         if ((match = /[b|B]ada\/([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4156,11 +4156,11 @@ var userAgentBase = (function() {
 
         if ((match = /BREW; U; ([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         } else if ((match = /;BREW\/([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4209,7 +4209,7 @@ var userAgentBase = (function() {
 
         if ((match = /Joli OS\/([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -4242,7 +4242,7 @@ var userAgentBase = (function() {
 
         if ((match = /OS\/2; Warp ([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -4257,7 +4257,7 @@ var userAgentBase = (function() {
 
         if ((match = /Grid OS ([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -4272,7 +4272,7 @@ var userAgentBase = (function() {
 
         if ((match = /AmigaOS ([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -4287,7 +4287,7 @@ var userAgentBase = (function() {
 
         if ((match = /MorphOS ([0-9.]*)/i.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -4408,7 +4408,7 @@ var userAgentBase = (function() {
 
         if ((match = /Version\/([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4429,7 +4429,7 @@ var userAgentBase = (function() {
 
         if ((match = /PlayStation Vita ([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4444,7 +4444,7 @@ var userAgentBase = (function() {
 
         if ((match = /PLAYSTATION 3;? ([0-9.]*)/.exec(ua))) {
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -4594,7 +4594,7 @@ var userAgentBase = (function() {
         this.browser.name = 'MachBlue XT';
         this.browser.version = new Version({
           value: match[1],
-          details: 2,
+          details: 2
         });
         this.device.type = 'television';
       }
@@ -4940,7 +4940,7 @@ var userAgentBase = (function() {
 
                   this.os.name = 'Touchwiz';
                   this.os.version = new Version({
-                    value: '2.0',
+                    value: '2.0'
                   });
                 }
               } else if ((match = /Dolfin\/([0-9.]*)/.exec(ua))) {
@@ -4961,17 +4961,17 @@ var userAgentBase = (function() {
                   switch (version) {
                     case '2.0':
                       this.os.version = new Version({
-                        value: '1.0',
+                        value: '1.0'
                       });
                       break;
                     case '2.2':
                       this.os.version = new Version({
-                        value: '1.2',
+                        value: '1.2'
                       });
                       break;
                     case '3.0':
                       this.os.version = new Version({
-                        value: '2.0',
+                        value: '2.0'
                       });
                       break;
                   }
@@ -4990,17 +4990,17 @@ var userAgentBase = (function() {
                   switch (version) {
                     case '1.0':
                       this.os.version = new Version({
-                        value: '1.0',
+                        value: '1.0'
                       });
                       break;
                     case '1.5':
                       this.os.version = new Version({
-                        value: '2.0',
+                        value: '2.0'
                       });
                       break;
                     case '2.0':
                       this.os.version = new Version({
-                        value: '3.0',
+                        value: '3.0'
                       });
                       break;
                   }
@@ -5049,7 +5049,7 @@ var userAgentBase = (function() {
 
           if ((match = /Version\/([0-9\.]+)/.exec(ua))) {
             this.browser.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           }
 
@@ -5078,7 +5078,7 @@ var userAgentBase = (function() {
 
         if ((match = /MSIE ([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5093,14 +5093,14 @@ var userAgentBase = (function() {
 
         if ((match = /Opera[\/| ]([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
         if ((match = /Version\/([0-9.]*)/.exec(ua))) {
           if (parseFloat(match[1]) >= 10) {
             this.browser.version = new Version({
-              value: match[1],
+              value: match[1]
             });
           } else {
             this.browser.version = null;
@@ -5138,7 +5138,7 @@ var userAgentBase = (function() {
           this.browser.name = 'Opera Mini';
           this.browser.version = new Version({
             value: match[1],
-            details: -1,
+            details: -1
           });
           this.browser.mode = 'proxy';
           this.device.type = 'mobile';
@@ -5194,7 +5194,7 @@ var userAgentBase = (function() {
 
         if ((match = /Firefox\/([0-9ab.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5229,7 +5229,7 @@ var userAgentBase = (function() {
 
         if ((match = /Namoroka\/([0-9ab.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5242,7 +5242,7 @@ var userAgentBase = (function() {
 
         if ((match = /Shiretoko\/([0-9ab.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5255,7 +5255,7 @@ var userAgentBase = (function() {
 
         if ((match = /Minefield\/([0-9ab.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5268,7 +5268,7 @@ var userAgentBase = (function() {
 
         if ((match = /Firebird\/([0-9ab.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5283,7 +5283,7 @@ var userAgentBase = (function() {
 
         if ((match = /SeaMonkey\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5298,7 +5298,7 @@ var userAgentBase = (function() {
 
         if ((match = /Netscape[0-9]?\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5312,7 +5312,7 @@ var userAgentBase = (function() {
 
         if ((match = /[k|K]onqueror\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5325,7 +5325,7 @@ var userAgentBase = (function() {
         this.browser.stock = false;
         this.browser.name = 'Chrome';
         this.browser.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         if (this.os.name === 'Android') {
@@ -5388,7 +5388,7 @@ var userAgentBase = (function() {
 
         if ((match = /chromeframe\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5404,7 +5404,7 @@ var userAgentBase = (function() {
 
         if ((match = /Chromium\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5420,7 +5420,7 @@ var userAgentBase = (function() {
           this.browser.version = new Version({
             value: match[1],
             details: 3,
-            builds: false,
+            builds: false
           });
         }
       }
@@ -5435,7 +5435,7 @@ var userAgentBase = (function() {
         if ((match = /NokiaBrowser\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
             value: match[1],
-            details: 3,
+            details: 3
           });
         }
       }
@@ -5450,7 +5450,7 @@ var userAgentBase = (function() {
         if ((match = /Maemo[ |_]Browser[ |_]([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
             value: match[1],
-            details: 3,
+            details: 3
           });
         }
       }
@@ -5465,7 +5465,7 @@ var userAgentBase = (function() {
 
         if ((match = /NetFront\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5485,7 +5485,7 @@ var userAgentBase = (function() {
           if ((match = /Silk\/([0-9.]*)/.exec(ua))) {
             this.browser.version = new Version({
               value: match[1],
-              details: 2,
+              details: 2
             });
           }
 
@@ -5510,7 +5510,7 @@ var userAgentBase = (function() {
 
         if ((match = /Dolfin\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5531,13 +5531,13 @@ var userAgentBase = (function() {
 
         if ((match = /Iris\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
         if ((match = / WM([0-9]) /.exec(ua))) {
           this.os.version = new Version({
-            value: `${match[1]}.0`,
+            value: `${match[1]}.0`
           });
         } else {
           this.browser.mode = 'desktop';
@@ -5553,7 +5553,7 @@ var userAgentBase = (function() {
 
         if ((match = /Jasmine\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5568,7 +5568,7 @@ var userAgentBase = (function() {
 
         if ((match = /Boxee\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5591,7 +5591,7 @@ var userAgentBase = (function() {
 
         if ((match = /Espial\/([0-9.]*)/.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -5603,7 +5603,7 @@ var userAgentBase = (function() {
         this.browser.name = 'ANT Galio';
         this.browser.version = new Version({
           value: match[1],
-          details: 3,
+          details: 3
         });
         this.device.type = 'television';
       }
@@ -5615,7 +5615,7 @@ var userAgentBase = (function() {
         this.browser.name = 'NetFront NX';
         this.browser.version = new Version({
           value: match[1],
-          details: 2,
+          details: 2
         });
         if ((match = /DTV/i.exec(ua))) {
           this.device.type = 'television';
@@ -5638,21 +5638,21 @@ var userAgentBase = (function() {
 
         if ((match = /Obigo\/([0-9.]*)/i.exec(ua))) {
           this.browser.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
         if ((match = /Obigo\/([A-Z])([0-9.]*)/i.exec(ua))) {
           this.browser.name = `Obigo ${match[1]}`;
           this.browser.version = new Version({
-            value: match[2],
+            value: match[2]
           });
         }
 
         if ((match = /Obigo-([A-Z])([0-9.]*)\//i.exec(ua))) {
           this.browser.name = `Obigo ${match[1]}`;
           this.browser.version = new Version({
-            value: match[2],
+            value: match[2]
           });
         }
       }
@@ -5668,7 +5668,7 @@ var userAgentBase = (function() {
         if ((match = /UCWEB([0-9]*[.][0-9]*)/.exec(ua))) {
           this.browser.version = new Version({
             value: match[1],
-            details: 3,
+            details: 3
           });
         }
 
@@ -5681,7 +5681,7 @@ var userAgentBase = (function() {
         if ((match = /^IUC \(U;\s?iOS ([0-9\.]+);/.exec(ua))) {
           this.os.name = 'iOS';
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
 
@@ -5694,7 +5694,7 @@ var userAgentBase = (function() {
 
           this.os.name = 'Android';
           this.os.version = new Version({
-            value: match[1],
+            value: match[1]
           });
 
           if (typeof ANDROID_MODELS[model] !== 'undefined') {
@@ -5717,7 +5717,7 @@ var userAgentBase = (function() {
         this.browser.name = 'UC Browser';
         this.browser.version = new Version({
           value: match[1],
-          details: 2,
+          details: 2
         });
       }
 
@@ -5728,7 +5728,7 @@ var userAgentBase = (function() {
       if ((match = /Ninesky(?:-android-mobile(?:-cn)?)?\/([0-9.]*)/.exec(ua))) {
         this.browser.name = 'NineSky';
         this.browser.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         if (this.os.name !== 'Android') {
@@ -5747,7 +5747,7 @@ var userAgentBase = (function() {
       if ((match = /Skyfire\/([0-9.]*)/.exec(ua))) {
         this.browser.name = 'Skyfire';
         this.browser.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         this.device.type = 'mobile';
@@ -5763,7 +5763,7 @@ var userAgentBase = (function() {
       if ((match = /DolphinHDCN\/([0-9.]*)/.exec(ua))) {
         this.browser.name = 'Dolphin';
         this.browser.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         this.device.type = 'mobile';
@@ -5791,7 +5791,7 @@ var userAgentBase = (function() {
 
         this.browser.version = new Version({
           value: version,
-          details: 2,
+          details: 2
         });
         this.browser.channel = '';
 
@@ -5812,7 +5812,7 @@ var userAgentBase = (function() {
 
         this.browser.version = new Version({
           value: version,
-          details: 2,
+          details: 2
         });
         this.browser.channel = '';
       }
@@ -5825,7 +5825,7 @@ var userAgentBase = (function() {
         this.browser.name = 'Puffin';
         this.browser.version = new Version({
           value: match[1],
-          details: 2,
+          details: 2
         });
 
         this.device.type = 'mobile';
@@ -5853,7 +5853,7 @@ var userAgentBase = (function() {
       if ((match = /Midori\/([0-9.]*)/.exec(ua))) {
         this.browser.name = 'Midori';
         this.browser.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         if (this.os.name !== 'Linux') {
@@ -5873,429 +5873,429 @@ var userAgentBase = (function() {
       const browsers = [
         {
           name: 'AdobeAIR',
-          regexp: /AdobeAIR\/([0-9.]*)/,
+          regexp: /AdobeAIR\/([0-9.]*)/
         },
         {
           name: 'Awesomium',
-          regexp: /Awesomium\/([0-9.]*)/,
+          regexp: /Awesomium\/([0-9.]*)/
         },
         {
           name: 'Canvace',
-          regexp: /Canvace Standalone\/([0-9.]*)/,
+          regexp: /Canvace Standalone\/([0-9.]*)/
         },
         {
           name: 'Ekioh',
-          regexp: /Ekioh\/([0-9.]*)/,
+          regexp: /Ekioh\/([0-9.]*)/
         },
         {
           name: 'JavaFX',
-          regexp: /JavaFX\/([0-9.]*)/,
+          regexp: /JavaFX\/([0-9.]*)/
         },
         {
           name: 'GFXe',
-          regexp: /GFXe\/([0-9.]*)/,
+          regexp: /GFXe\/([0-9.]*)/
         },
         {
           name: 'LuaKit',
-          regexp: /luakit/,
+          regexp: /luakit/
         },
         {
           name: 'Titanium',
-          regexp: /Titanium\/([0-9.]*)/,
+          regexp: /Titanium\/([0-9.]*)/
         },
         {
           name: 'OpenWebKitSharp',
-          regexp: /OpenWebKitSharp/,
+          regexp: /OpenWebKitSharp/
         },
         {
           name: 'Prism',
-          regexp: /Prism\/([0-9.]*)/,
+          regexp: /Prism\/([0-9.]*)/
         },
         {
           name: 'Qt',
-          regexp: /Qt\/([0-9.]*)/,
+          regexp: /Qt\/([0-9.]*)/
         },
         {
           name: 'QtEmbedded',
-          regexp: /QtEmbedded/,
+          regexp: /QtEmbedded/
         },
         {
           name: 'QtEmbedded',
-          regexp: /QtEmbedded.*Qt\/([0-9.]*)/,
+          regexp: /QtEmbedded.*Qt\/([0-9.]*)/
         },
         {
           name: 'RhoSimulator',
-          regexp: /RhoSimulator/,
+          regexp: /RhoSimulator/
         },
         {
           name: 'UWebKit',
-          regexp: /UWebKit\/([0-9.]*)/,
+          regexp: /UWebKit\/([0-9.]*)/
         },
 
         {
           name: 'PhantomJS',
-          regexp: /PhantomJS\/([0-9.]*)/,
+          regexp: /PhantomJS\/([0-9.]*)/
         },
         {
           name: 'Google Web Preview',
-          regexp: /Google Web Preview/,
+          regexp: /Google Web Preview/
         },
 
         {
           name: 'Google Earth',
-          regexp: /Google Earth\/([0-9.]*)/,
+          regexp: /Google Earth\/([0-9.]*)/
         },
         {
           name: 'EA Origin',
-          regexp: /Origin\/([0-9.]*)/,
+          regexp: /Origin\/([0-9.]*)/
         },
         {
           name: 'SecondLife',
-          regexp: /SecondLife\/([0-9.]*)/,
+          regexp: /SecondLife\/([0-9.]*)/
         },
         {
           name: 'Valve Steam',
-          regexp: /Valve Steam/,
+          regexp: /Valve Steam/
         },
 
         {
           name: 'Songbird',
-          regexp: /Songbird\/([0-9.]*)/,
+          regexp: /Songbird\/([0-9.]*)/
         },
         {
           name: 'Thunderbird',
-          regexp: /Thunderbird\/([0-9.]*)/,
+          regexp: /Thunderbird\/([0-9.]*)/
         },
 
         {
           name: 'Abrowser',
-          regexp: /Abrowser\/([0-9.]*)/,
+          regexp: /Abrowser\/([0-9.]*)/
         },
         {
           name: 'arora',
-          regexp: /[Aa]rora\/([0-9.]*)/,
+          regexp: /[Aa]rora\/([0-9.]*)/
         },
         {
           name: 'Baidu Browser',
-          regexp: /M?BaiduBrowser\/([0-9.]*)/i,
+          regexp: /M?BaiduBrowser\/([0-9.]*)/i
         },
         {
           name: 'Camino',
-          regexp: /Camino\/([0-9.]*)/,
+          regexp: /Camino\/([0-9.]*)/
         },
         {
           name: 'Canure',
           regexp: /Canure\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'CometBird',
-          regexp: /CometBird\/([0-9.]*)/,
+          regexp: /CometBird\/([0-9.]*)/
         },
         {
           name: 'Comodo Dragon',
           regexp: /Comodo_Dragon\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Conkeror',
-          regexp: /[Cc]onkeror\/([0-9.]*)/,
+          regexp: /[Cc]onkeror\/([0-9.]*)/
         },
         {
           name: 'CoolNovo',
           regexp: /(?:CoolNovo|CoolNovoChromePlus)\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'ChromePlus',
           regexp: /ChromePlus(?:\/([0-9.]*))?$/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Daedalus',
           regexp: /Daedalus ([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Demobrowser',
-          regexp: /demobrowser\/([0-9.]*)/,
+          regexp: /demobrowser\/([0-9.]*)/
         },
         {
           name: 'Dooble',
-          regexp: /Dooble(?:\/([0-9.]*))?/,
+          regexp: /Dooble(?:\/([0-9.]*))?/
         },
         {
           name: 'DWB',
-          regexp: /dwb(?:-hg)?(?:\/([0-9.]*))?/,
+          regexp: /dwb(?:-hg)?(?:\/([0-9.]*))?/
         },
         {
           name: 'Epiphany',
-          regexp: /Epiphany\/([0-9.]*)/,
+          regexp: /Epiphany\/([0-9.]*)/
         },
         {
           name: 'FireWeb',
-          regexp: /FireWeb\/([0-9.]*)/,
+          regexp: /FireWeb\/([0-9.]*)/
         },
         {
           name: 'Flock',
           regexp: /Flock\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Galeon',
           regexp: /Galeon\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Helium',
-          regexp: /HeliumMobileBrowser\/([0-9.]*)/,
+          regexp: /HeliumMobileBrowser\/([0-9.]*)/
         },
         {
           name: 'iCab',
-          regexp: /iCab\/([0-9.]*)/,
+          regexp: /iCab\/([0-9.]*)/
         },
         {
           name: 'Iceape',
-          regexp: /Iceape\/([0-9.]*)/,
+          regexp: /Iceape\/([0-9.]*)/
         },
         {
           name: 'IceCat',
-          regexp: /IceCat ([0-9.]*)/,
+          regexp: /IceCat ([0-9.]*)/
         },
         {
           name: 'Iceweasel',
-          regexp: /Iceweasel\/([0-9.]*)/,
+          regexp: /Iceweasel\/([0-9.]*)/
         },
         {
           name: 'InternetSurfboard',
-          regexp: /InternetSurfboard\/([0-9.]*)/,
+          regexp: /InternetSurfboard\/([0-9.]*)/
         },
         {
           name: 'Iron',
           regexp: /Iron\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Isis',
-          regexp: /BrowserServer/,
+          regexp: /BrowserServer/
         },
         {
           name: 'Jumanji',
-          regexp: /jumanji/,
+          regexp: /jumanji/
         },
         {
           name: 'Kazehakase',
-          regexp: /Kazehakase\/([0-9.]*)/,
+          regexp: /Kazehakase\/([0-9.]*)/
         },
         {
           name: 'KChrome',
           regexp: /KChrome\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'K-Meleon',
-          regexp: /K-Meleon\/([0-9.]*)/,
+          regexp: /K-Meleon\/([0-9.]*)/
         },
         {
           name: 'Leechcraft',
           regexp: /Leechcraft(?:\/([0-9.]*))?/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Lightning',
-          regexp: /Lightning\/([0-9.]*)/,
+          regexp: /Lightning\/([0-9.]*)/
         },
         {
           name: 'Lunascape',
           regexp: /Lunascape[\/| ]([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'iLunascape',
           regexp: /iLunascape\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Maxthon',
           regexp: /Maxthon[\/ ]([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'MiniBrowser',
-          regexp: /MiniBr?owserM\/([0-9.]*)/,
+          regexp: /MiniBr?owserM\/([0-9.]*)/
         },
         {
           name: 'MiniBrowser',
-          regexp: /MiniBrowserMobile\/([0-9.]*)/,
+          regexp: /MiniBrowserMobile\/([0-9.]*)/
         },
         {
           name: 'MixShark',
-          regexp: /MixShark\/([0-9.]*)/,
+          regexp: /MixShark\/([0-9.]*)/
         },
         {
           name: 'Motorola WebKit',
           regexp: /MotorolaWebKit\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'NetFront LifeBrowser',
-          regexp: /NetFrontLifeBrowser\/([0-9.]*)/,
+          regexp: /NetFrontLifeBrowser\/([0-9.]*)/
         },
         {
           name: 'Netscape Navigator',
           regexp: /Navigator\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Odyssey',
-          regexp: /OWB\/([0-9.]*)/,
+          regexp: /OWB\/([0-9.]*)/
         },
         {
           name: 'OmniWeb',
-          regexp: /OmniWeb/,
+          regexp: /OmniWeb/
         },
         {
           name: 'Orca',
-          regexp: /Orca\/([0-9.]*)/,
+          regexp: /Orca\/([0-9.]*)/
         },
         {
           name: 'Origyn',
-          regexp: /Origyn Web Browser/,
+          regexp: /Origyn Web Browser/
         },
         {
           name: 'Palemoon',
-          regexp: /Pale[mM]oon\/([0-9.]*)/,
+          regexp: /Pale[mM]oon\/([0-9.]*)/
         },
         {
           name: 'Phantom',
-          regexp: /Phantom\/V([0-9.]*)/,
+          regexp: /Phantom\/V([0-9.]*)/
         },
         {
           name: 'Polaris',
           regexp: /Polaris\/v?([0-9.]*)/i,
-          details: 2,
+          details: 2
         },
         {
           name: 'QtCreator',
-          regexp: /QtCreator\/([0-9.]*)/,
+          regexp: /QtCreator\/([0-9.]*)/
         },
         {
           name: 'QtQmlViewer',
-          regexp: /QtQmlViewer/,
+          regexp: /QtQmlViewer/
         },
         {
           name: 'QtTestBrowser',
-          regexp: /QtTestBrowser\/([0-9.]*)/,
+          regexp: /QtTestBrowser\/([0-9.]*)/
         },
         {
           name: 'QtWeb',
-          regexp: /QtWeb Internet Browser\/([0-9.]*)/,
+          regexp: /QtWeb Internet Browser\/([0-9.]*)/
         },
         {
           name: 'QupZilla',
-          regexp: /QupZilla\/([0-9.]*)/,
+          regexp: /QupZilla\/([0-9.]*)/
         },
         {
           name: 'Roccat',
-          regexp: /Roccat\/([0-9]\.[0-9.]*)/,
+          regexp: /Roccat\/([0-9]\.[0-9.]*)/
         },
         {
           name: 'Raven for Mac',
-          regexp: /Raven for Mac\/([0-9.]*)/,
+          regexp: /Raven for Mac\/([0-9.]*)/
         },
         {
           name: 'rekonq',
-          regexp: /rekonq/,
+          regexp: /rekonq/
         },
         {
           name: 'RockMelt',
           regexp: /RockMelt\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Sleipnir',
           regexp: /Sleipnir\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'SMBrowser',
-          regexp: /SMBrowser/,
+          regexp: /SMBrowser/
         },
         {
           name: 'Sogou Explorer',
-          regexp: /SE 2.X MetaSr/,
+          regexp: /SE 2.X MetaSr/
         },
         {
           name: 'Snowshoe',
           regexp: /Snowshoe\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'Sputnik',
           regexp: /Sputnik\/([0-9.]*)/i,
-          details: 3,
+          details: 3
         },
         {
           name: 'Stainless',
-          regexp: /Stainless\/([0-9.]*)/,
+          regexp: /Stainless\/([0-9.]*)/
         },
         {
           name: 'SunChrome',
-          regexp: /SunChrome\/([0-9.]*)/,
+          regexp: /SunChrome\/([0-9.]*)/
         },
         {
           name: 'Surf',
-          regexp: /Surf\/([0-9.]*)/,
+          regexp: /Surf\/([0-9.]*)/
         },
         {
           name: 'TaoBrowser',
           regexp: /TaoBrowser\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'TaomeeBrowser',
           regexp: /TaomeeBrowser\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'TazWeb',
-          regexp: /TazWeb/,
+          regexp: /TazWeb/
         },
         {
           name: 'Viera',
-          regexp: /Viera\/([0-9.]*)/,
+          regexp: /Viera\/([0-9.]*)/
         },
         {
           name: 'Villanova',
           regexp: /Villanova\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Wavelink Velocity',
           regexp: /Wavelink Velocity Browser\/([0-9.]*)/,
-          details: 2,
+          details: 2
         },
         {
           name: 'WebPositive',
-          regexp: /WebPositive/,
+          regexp: /WebPositive/
         },
         {
           name: 'WebRender',
-          regexp: /WebRender/,
+          regexp: /WebRender/
         },
         {
           name: 'Wyzo',
           regexp: /Wyzo\/([0-9.]*)/,
-          details: 3,
+          details: 3
         },
         {
           name: 'Zetakey',
-          regexp: /Zetakey Webkit\/([0-9.]*)/,
+          regexp: /Zetakey Webkit\/([0-9.]*)/
         },
         {
           name: 'Zetakey',
-          regexp: /Zetakey\/([0-9.]*)/,
-        },
+          regexp: /Zetakey\/([0-9.]*)/
+        }
       ];
 
       for (let b = 0; b < browsers.length; b++) {
@@ -6307,7 +6307,7 @@ var userAgentBase = (function() {
           if (match[1]) {
             this.browser.version = new Version({
               value: match[1],
-              details: browsers[b].details || null,
+              details: browsers[b].details || null
             });
           } else {
             this.browser.version = null;
@@ -6322,14 +6322,14 @@ var userAgentBase = (function() {
       if ((match = /WebKit\/([0-9.]*)/i.exec(ua))) {
         this.engine.name = 'Webkit';
         this.engine.version = new Version({
-          value: match[1],
+          value: match[1]
         });
       }
 
       if ((match = /Browser\/AppleWebKit([0-9.]*)/i.exec(ua))) {
         this.engine.name = 'Webkit';
         this.engine.version = new Version({
-          value: match[1],
+          value: match[1]
         });
       }
 
@@ -6340,7 +6340,7 @@ var userAgentBase = (function() {
       if ((match = /KHTML\/([0-9.]*)/.exec(ua))) {
         this.engine.name = 'KHTML';
         this.engine.version = new Version({
-          value: match[1],
+          value: match[1]
         });
       }
 
@@ -6353,7 +6353,7 @@ var userAgentBase = (function() {
 
         if ((match = /; rv:([^\)]+)\)/.exec(ua))) {
           this.engine.version = new Version({
-            value: match[1],
+            value: match[1]
           });
         }
       }
@@ -6365,7 +6365,7 @@ var userAgentBase = (function() {
       if ((match = /Presto\/([0-9.]*)/.exec(ua))) {
         this.engine.name = 'Presto';
         this.engine.version = new Version({
-          value: match[1],
+          value: match[1]
         });
       }
 
@@ -6376,27 +6376,27 @@ var userAgentBase = (function() {
       if ((match = /Trident\/([0-9.]*)/.exec(ua))) {
         this.engine.name = 'Trident';
         this.engine.version = new Version({
-          value: match[1],
+          value: match[1]
         });
 
         if (this.browser.name === 'Internet Explorer') {
           if (parseVersion(this.engine.version) === 6 && parseFloat(this.browser.version) < 10) {
             this.browser.version = new Version({
-              value: '10.0',
+              value: '10.0'
             });
             this.browser.mode = 'compat';
           }
 
           if (parseVersion(this.engine.version) === 5 && parseFloat(this.browser.version) < 9) {
             this.browser.version = new Version({
-              value: '9.0',
+              value: '9.0'
             });
             this.browser.mode = 'compat';
           }
 
           if (parseVersion(this.engine.version) === 4 && parseFloat(this.browser.version) < 8) {
             this.browser.version = new Version({
-              value: '8.0',
+              value: '8.0'
             });
             this.browser.mode = 'compat';
           }
@@ -6405,7 +6405,7 @@ var userAgentBase = (function() {
         if (this.os.name === 'Windows Phone') {
           if (parseVersion(this.engine.version) === 5 && parseFloat(this.os.version) < 7.5) {
             this.os.version = new Version({
-              value: '7.5',
+              value: '7.5'
             });
           }
         }
@@ -6433,47 +6433,47 @@ var userAgentBase = (function() {
         switch (true) {
           case this.engine.version.is('2.10'):
             this.browser.version = new Version({
-              value: 3.2,
+              value: 3.2
             });
             break;
           case this.engine.version.is('2.9'):
             this.browser.version = new Version({
-              value: 3.1,
+              value: 3.1
             });
             break;
           case this.engine.version.is('2.8'):
             this.browser.version = new Version({
-              value: 3.0,
+              value: 3.0
             });
             break;
           case this.engine.version.is('2.7'):
             this.browser.version = new Version({
-              value: 2.9,
+              value: 2.9
             });
             break;
           case this.engine.version.is('2.6'):
             this.browser.version = new Version({
-              value: 2.8,
+              value: 2.8
             });
             break;
           case this.engine.version.is('2.4'):
             this.browser.version = new Version({
-              value: 10.3,
+              value: 10.3
             });
             break;
           case this.engine.version.is('2.3'):
             this.browser.version = new Version({
-              value: 10,
+              value: 10
             });
             break;
           case this.engine.version.is('2.2'):
             this.browser.version = new Version({
-              value: 9.7,
+              value: 9.7
             });
             break;
           case this.engine.version.is('2.1'):
             this.browser.version = new Version({
-              value: 9.6,
+              value: 9.6
             });
             break;
           default:
@@ -6710,7 +6710,7 @@ var userAgentBase = (function() {
           }
         }
       }
-    },
+    }
   };
 
   function cleanupModel(s) {

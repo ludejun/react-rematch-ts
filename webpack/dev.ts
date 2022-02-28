@@ -1,4 +1,5 @@
 /* eslint-disable */
+import projectConfig from '../src/configs/index';
 const path = require('path');
 const webpack = require('webpack');
 // const middleware = require('webpack-dev-middleware');
@@ -6,34 +7,35 @@ const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const projectConfig = require('../src/configs/index');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin;
 
 const env = {
   hot_server_host: 'localhost',
-  hot_server_port: 5590,
+  hot_server_port: 5590
 };
 
 const loaders = [
   {
     test: /\.jsx?$/,
     exclude: /(node_modules)/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        presets: ['@babel/preset-env', '@babel/preset-react'],
-        // plugins: [['import', { libraryName: 'antd', style: 'css' }]], // `style: true` 会加载 less 文件
-      },
+    resolve: {
+      fullySpecified: false
     },
+    use: ['babel-loader']
+  },
+
+  {
+    test: /\.m?js/,
+    resolve: {
+      fullySpecified: false
+    }
   },
   {
     test: /\.tsx?$/,
     exclude: /node_modules/,
-    loader: 'babel-loader',
-    options: {
-      presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-      // plugins: [['import', { libraryName: 'antd', style: 'css' }]],
-    },
+    // use: ['ts-loader'],
+    use: ['babel-loader']
   }, // 先解析ts和tsx，rule规则从下往上
   // {
   //   test: /\.json$/,
@@ -43,33 +45,55 @@ const loaders = [
   {
     test: /\.css$/,
     // exclude: /node_modules/, // Quill编辑器需要引用nodemodules中的css
-    use: ['style-loader', 'css-loader', 'postcss-loader'],
+    use: ['style-loader', 'css-loader', 'postcss-loader']
   },
   {
     test: /\.less$/,
     exclude: /node_modules/,
-    use: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader'],
+    use: [
+      'style-loader',
+      'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          postcssOptions: {
+            plugins: [
+              [
+                'postcss-preset-env',
+                {
+                  // Options
+                }
+              ]
+            ]
+          }
+        }
+      },
+      'less-loader'
+    ]
   },
   {
     test: /\.(png|svg|jpg|gif)$/,
-    use: ['file-loader'],
+    type: 'asset/resource'
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: ['file-loader'],
-  },
+    use: ['file-loader']
+  }
 ];
 
 const config = {
   resolve: {
     extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx'],
+    alias: {
+      '@': path.join(__dirname, '../src')
+    }
   },
 
   entry: [
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://${env.hot_server_host}:${env.hot_server_port}`,
     'webpack/hot/only-dev-server',
-    './src/index.tsx',
+    './src/index.tsx'
   ],
   output: {
     path: path.join(__dirname, '../dist'),
@@ -78,12 +102,13 @@ const config = {
     filename: '[name].[hash].js',
     // 如有使用import()动态加载的代码打包
     chunkFilename: '[name].bundle.js',
-    publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
+    publicPath:
+      'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
   },
 
   // What information should be printed to the console
   stats: {
-    colors: true,
+    colors: true
   },
 
   // The list of plugins for Webpack compiler
@@ -91,30 +116,30 @@ const config = {
     new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('dev'),
+        NODE_ENV: JSON.stringify('local')
       },
-      __MOCK: process.argv[2].indexOf('mock=true') >= 0 ? true : false,
+      __MOCK: process.argv[2].indexOf('mock=true') >= 0 ? true : false
     }),
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist'],
+      cleanAfterEveryBuildPatterns: ['dist']
     }),
     new HtmlWebpackPlugin({
       title: projectConfig.htmlTitle,
       inject: 'body',
       minify: false,
       template: path.join(__dirname, '../public/index.html'),
-      alwaysWriteToDisk: true,
+      alwaysWriteToDisk: true
     }),
     // new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NamedModulesPlugin(),
+    // new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
     // new BundleAnalyzerPlugin({ analyzerPort: 5592 }),
   ],
 
   // Options affecting the normal modules
   module: {
-    rules: loaders,
+    rules: loaders
   },
 
   // 可以在CLI参数中传递
@@ -132,6 +157,9 @@ const config = {
   // externals: {
   //   react: 'react',
   // },
+  optimization: {
+    moduleIds: 'named'
+  }
 };
 
 // 根据命令行参数决定要不要打开： 打包模块体积分析页面
@@ -140,13 +168,19 @@ if (!process.argv[2] || process.argv[2].indexOf('bundleSize=true') >= 0) {
 }
 
 const options = {
-  contentBase: path.join(__dirname, '../dist'),
+  static: path.join(__dirname, '../dist'),
   compress: true,
   port: env.hot_server_port,
-  inline: true,
+  // inline: true,
+  client: {
+    overlay: {
+      warnings: false,
+      errors: true
+    }
+  },
   hot: true,
-  open: true,
-  historyApiFallback: true,
+  // open: true,
+  historyApiFallback: true
   // publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
 };
 // webpackDevServer.addDevServerEntrypoints(config, options);

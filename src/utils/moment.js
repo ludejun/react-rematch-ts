@@ -48,7 +48,7 @@ export default class Moment {
       default:
         throw new Error('Moment Error: add函数时间单位不支持');
     }
-    gap = gap.toFixed(0);
+    gap = parseInt(gap.toFixed(0), 0);
     if (formatter !== 'u') {
       return this.format(formatter, this.base + gap);
     }

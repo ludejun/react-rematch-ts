@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
-    "outDir": "build/dist",
+    "experimentalDecorators": true,
     "module": "commonjs",
     "target": "es5",
     "lib": ["es6", "dom"],
-    "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
+    "strict": true,
     "moduleResolution": "node",
+    "baseUrl": ".", // 解决不识别path地址的问题
     "rootDir": "./",
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": ["src", "node_modules/@types"],
+    "allowSyntheticDefaultImports": true,
   },
   "exclude": [
     "node_modules",

@@ -5,7 +5,7 @@
  * @param fillChat 用来补齐长度的单字符
  * @returns {string}
  */
-export function num2String(num: number, count: number = 2, fillChat: string = '0'): string {
+export function num2String(num: number, count = 2, fillChat = '0'): string {
   const result = num.toString();
   if (result.length >= count) {
     return result;
@@ -52,11 +52,11 @@ export function addParamsToUrl(url: string, paramName: string, value?: string): 
 }
 
 // 解析url的参数
-export function parseUrlParams(url: string): Object {
+export function parseUrlParams(url: string): Record<string, string> {
   if (url.indexOf('?') >= 0) {
     const paraStr = url.substring(url.indexOf('?') + 1);
     if (paraStr) {
-      const result = {};
+      const result: Record<string, string> = {};
       paraStr.split('&').forEach(param => {
         const paramArr = param.split('=');
         if (paramArr.length === 2) {

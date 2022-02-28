@@ -100,7 +100,7 @@ class Monitor {
         type,
         ts: new Date().getTime(),
         id,
-        custom, // TODO，没有不上报
+        custom // TODO，没有不上报
       });
       window.localStorage.setItem(this.storageName, JSON.stringify(this.ev));
       if (this.ev.length >= this.maxStorage || force) {
@@ -221,7 +221,7 @@ class Monitor {
         dt: device.device && device.device.type, // 设备类型
         bt: device.browser && device.browser.name, // 浏览器类型
         btv: device.browser && device.browser.version && device.browser.version.original, // 浏览器版本
-        maccode: this.maccode,
+        maccode: this.maccode
       };
       if (!this.accptMd) {
         if (window.deviceInfo && window.deviceInfo.os) {
@@ -244,7 +244,7 @@ class Monitor {
         url: document.URL,
         sc: window && window.screen && `${window.screen.width}X${window.screen.height}`, // 屏幕尺寸/分辨率
         dpi: window.devicePixelRatio || '', // 设备像素比
-        accptmd: this.accptMd, // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
+        accptmd: this.accptMd // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
       };
     }
   }
@@ -265,11 +265,11 @@ class Monitor {
   setDeviceInfo(deviceInfo) {
     this.deviceInfo = {
       ...this.deviceInfo,
-      ...deviceInfo,
+      ...deviceInfo
     };
     this.baseInfo = {
       ...this.baseInfo,
-      ...this.deviceInfo,
+      ...this.deviceInfo
     };
   }
 

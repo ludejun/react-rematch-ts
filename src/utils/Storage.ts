@@ -6,7 +6,7 @@ const { parse, stringify } = JSON;
 
 baseStorage.prototype.set = function(key: any, value: any, expired: any) {
   const wrapped: any = {
-    data: value,
+    data: value
   };
   if (expired) {
     wrapped.expired = new Moment().add(expired, 'm');
@@ -34,18 +34,17 @@ baseStorage.prototype.remove = function(key: any) {
 };
 
 baseStorage.prototype.retrieve = function(key: any, expired: any, success: any, fail: any) {
-  const self = this;
   const data = this.get(key);
   const saveOpts = {
     key,
-    expired,
+    expired
   };
   if (data) {
     success(data, saveOpts); // true means isCache
   } else {
     fail((res: any) => {
       if (res) {
-        self.set(key, res, expired);
+        this.set(key, res, expired);
       }
     }, saveOpts);
   }

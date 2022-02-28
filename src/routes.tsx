@@ -2,10 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import App from './pages/App';
 import LoginPage from './pages/login/index';
-import Layout from './pages/layout';
+import { Layout } from './pages/layout';
 import store from './store';
 
-export default function() {
+export const Routes = () => {
   return (
     <Router>
       <Switch>
@@ -23,9 +23,9 @@ export default function() {
       </Switch>
     </Router>
   );
-}
+};
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ children, ...rest }: { children: React.ReactNode }) {
   const { isAuth } = store.getState().user;
 
   return (
@@ -38,7 +38,7 @@ function PrivateRoute({ children, ...rest }) {
           <Redirect
             to={{
               pathname: '/login',
-              state: { from: location },
+              state: { from: location }
             }}
           />
         )

@@ -12,18 +12,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier'
   ],
-  plugins: [
-    'react',
-    'import',
-    'import-alias',
-    '@typescript-eslint',
-    'prettier'
-  ],
+  plugins: ['react', 'import', 'import-alias', '@typescript-eslint', 'prettier'],
   rules: {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-array-constructor': 'error',
     '@typescript-eslint/no-duplicate-imports': 'error',
-    '@typescript-eslint/no-shadow': 'error',
+    '@typescript-eslint/no-shadow': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     'react/prop-types': 'off',
     '@typescript-eslint/no-unused-expressions': 'off',

@@ -98,7 +98,7 @@ export const wrapperRequest = ({
           }
         });
         errorCallback && errorCallback();
-        Promise.reject(error);
+        return Promise.reject(error);
       });
   }
   return next(action);

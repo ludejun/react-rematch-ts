@@ -9,6 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const env = {
   hot_server_host: 'localhost',
@@ -90,16 +91,15 @@ const config = {
   },
 
   entry: [
-    'react-hot-loader/patch',
-    `webpack-dev-server/client?http://${env.hot_server_host}:${env.hot_server_port}`,
-    'webpack/hot/only-dev-server',
+    // `webpack-dev-server/client?http://${env.hot_server_host}:${env.hot_server_port}`,
+    // 'webpack/hot/only-dev-server',
     './src/index.tsx'
   ],
   output: {
     path: path.join(__dirname, '../dist'),
     // 如果配置多个entry入口，或者使用CommonsChunkPlugin这样的插件，应使用[name]占位符
     // 为了防止静态资源被缓存，将打包输出加入 文件内容hash（chunkhash）的标示
-    filename: '[name].[hash].js',
+    filename: '[name].[chunkhash].js',
     // 如有使用import()动态加载的代码打包
     chunkFilename: '[name].bundle.js',
     publicPath:
@@ -115,9 +115,6 @@ const config = {
   plugins: [
     new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('local')
-      },
       __MOCK: process.argv[2].indexOf('mock=true') >= 0 ? true : false
     }),
     new CleanWebpackPlugin({
@@ -130,11 +127,10 @@ const config = {
       template: path.join(__dirname, '../public/index.html'),
       alwaysWriteToDisk: true
     }),
-    // new webpack.optimize.OccurenceOrderPlugin(),
-    // new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
     // new BundleAnalyzerPlugin({ analyzerPort: 5592 }),
+    new ReactRefreshWebpackPlugin()
   ],
 
   // Options affecting the normal modules
@@ -178,14 +174,14 @@ const options = {
       errors: true
     }
   },
-  hot: true,
   // open: true,
   historyApiFallback: true
   // publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
 };
 // webpackDevServer.addDevServerEntrypoints(config, options);
 const compiler = webpack(config);
-const server = new webpackDevServer(compiler, options);
-server.listen(env.hot_server_port, env.hot_server_host, () => {
-  console.log('dev server listening on port ' + env.hot_server_port);
-});
+const server = new webpackDevServer(options, compiler);
+(async () => {
+  await server.start();
+  console.log('dev server 正在运行');
+})();

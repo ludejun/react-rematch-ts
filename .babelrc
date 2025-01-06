@@ -6,10 +6,10 @@
         "useBuiltIns": "usage",
         "corejs": 3,
         // "target": {},
-        "modules": false
+        // "modules": false
       }
     ],
-    "@babel/react",
+    "@babel/preset-react",
     "@babel/preset-typescript"
   ],
   "plugins": [
@@ -19,8 +19,8 @@
         "legacy": true
       }
     ],
-    "@babel/plugin-proposal-class-properties",
-    "react-hot-loader/babel",
+    // "@babel/plugin-proposal-class-properties",
+    "react-refresh/babel",
     ["@babel/plugin-transform-runtime", { "corejs": 3 }]
   ]
 }

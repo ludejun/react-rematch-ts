@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import Count from './components/Count';
 import { DispatchPro, RootState } from '../store';
 import monitor from '../utils/monitor';
@@ -11,13 +11,11 @@ type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = ReturnType<typeof mapDispatchToProps>;
 type IAppProps = StateProps & DispatchProps;
 
-// @monitor.track({ type: 'PV', id: '1111' })
 class App extends React.Component<IAppProps> {
   constructor(props: IAppProps) {
     super(props);
   }
 
-  // @monitor.track({type: 'MC', id: '2222', custom: {}})
   onLogClick() {
     monitor.trackEv('MC', '333333');
     console.log('LogClick');

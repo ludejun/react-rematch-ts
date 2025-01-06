@@ -1,4 +1,4 @@
-import Moment from './moment';
+import dayjs from 'dayjs';
 import configs from '../configs';
 
 const baseStorage: any = window.Storage;
@@ -9,7 +9,7 @@ baseStorage.prototype.set = function(key: any, value: any, expired: any) {
     data: value
   };
   if (expired) {
-    wrapped.expired = new Moment().add(expired, 'm');
+    wrapped.expired = dayjs().add(expired, 'm');
   }
   this.setItem(`${this.namespace}_${key}`, stringify(wrapped));
 };

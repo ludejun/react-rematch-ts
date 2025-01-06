@@ -1,24 +1,82 @@
-/* eslint-disable */
 import React, { useEffect } from 'react';
-import UserAgent from './userAgent';
 import getIP from './ip';
-import { isAndroidOrIOS } from './index.ts';
+import { isAndroidOrIOS } from '.';
 
+export declare interface DeviceInfo {
+  ua?: string | null; // 客户端的user agent
+  os?: string; // 操作系统
+  osv?: string | number; // 根据UA计算，操作系统版本
+  dt?: 'mobile'; // 设备类型
+  bt?: string | null; // 浏览器类型
+  btv?: string | null; // 浏览器版本
+  maccode?: string;
+}
+
+export declare interface MonitorBaseInfo extends DeviceInfo {
+  custno?: string;
+  utm?: string;
+  name?: string; // 应用名称，如trade_pc
+  av?: string | number; // App版本号
+  sv?: string | number; // SDK版本
+  title?: string;
+  domain?: string;
+  url?: string | null;
+  sc?: number | string;
+  dpi?: number | string;
+  accptmd?: string | 1 | 2 | 3 | 4 | 5; // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
+  ip?: string;
+  re?: string;
+}
+
+export declare interface MonitorError extends Error {
+  code?: string;
+  custom?: any;
+}
 class Monitor {
+  version: string;
+  storageName!: string;
+  maxStorage!: number;
+  ev!: any[];
+  apiServer!: string;
+  custno?: string;
+  appName?: string;
+  appVersion?: string;
+  maccode?: string;
+  deviceInfo?: DeviceInfo;
+  baseInfo?: MonitorBaseInfo;
+  utm?: string;
+  accptmd?: string;
+  requestLoading?: boolean;
+  projectErrCode!: string;
+  jsErrCode!: string;
+  maxSendCount!: number;
   constructor() {
     this.version = '1.0.1'; // SDK版本号
   }
 
   // 初始化
-  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode, accptMd }) {
+  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode, accptmd }: {
+    headerName?: string;
+    apiUrl: string;
+    maxStorage?: number;
+    custno?: string;
+    appName?: string;
+    appVersion?: string;
+    maccode?: string;
+    utm?: string;
+    accptmd?: string;
+    projectErrCode?: string;
+    jsErrCode?: string;
+    maxSendCount?: number;
+  }) {
     this.storageName = headerName || '__ReactMonitorLogs'; // 持久存储Key、日志发送的Header Key
     this.maxStorage = maxStorage || 5; // 日志最大存储量
     this.ev = []; // 存储事件日志
     this.apiServer = apiUrl || ''; // 日志发送地址，Get请求，一般为请求1*1gif
     this.custno = custno || '';
     this.appName = appName || '';
+    this.accptmd = accptmd || '';
     this.appVersion = appVersion || '';
-    this.accptMd = accptMd || '';
     if (!this.apiServer) {
       console.error('[Monitor报错]：埋点方法需要上报服务端URL，一般为请求1*1gif');
     }
@@ -57,7 +115,7 @@ class Monitor {
 
     this.generateNormal(); // 生成外层通用字段
     getIP(ip => {
-      this.baseInfo.ip = ip;
+      this.baseInfo!.ip = ip;
     });
   }
 
@@ -66,8 +124,8 @@ class Monitor {
     try {
       if (this.ev.length > 0) {
         // 当this.baseInfo中无IP信息
-        if (!this.baseInfo.ip) {
-          this.baseInfo.ip = getIP(ip => (this.baseInfo.ip = ip));
+        if (!this.baseInfo?.ip) {
+          getIP((ip) => (this.baseInfo!.ip = ip));
         }
         const request = new XMLHttpRequest();
         // request.responseType = 'blob';
@@ -94,7 +152,7 @@ class Monitor {
   }
 
   // 整合日志
-  processLogSerial(type, id, custom, force) {
+  processLogSerial(type: string, id: string, custom?: any, force = false) {
     if (this.ev && Array.isArray(this.ev)) {
       this.ev.push({
         type,
@@ -111,96 +169,8 @@ class Monitor {
     }
   }
 
-  // 子日志生成装饰器
-  track({ id = '', type = 'PV', custom }) {
-    const self = this;
-    if (type && id) {
-      return (...target) => {
-        console.log('target:', target);
-        console.log(this);
-        if (target.length === 1) {
-          // 装饰Class
-          return self.withTrackingComponentDecorator(type, id, custom)(...target);
-        }
-
-        return self.trackEventMethodDecorator(type, id, custom)(...target);
-      };
-    }
-    console.error('[Monitor报错]：埋点需要埋点类型和事件ID');
-  }
-
-  // Class装饰器
-  withTrackingComponentDecorator(type, id) {
-    const self = this;
-    // target为装饰的Class组件
-    // return target => {
-    //   // const decoratedComponentName = target.displayName || target.name || 'Component';
-    //   // PV点，监听组件componentDidMount
-    //   if (target.prototype.componentDidMount) {
-    //     console.log(this);
-    //     const didMount = target.prototype.componentDidMount;
-    //     // eslint-disable-next-line
-    //     target.prototype.componentDidMount = () => {
-    //       self.processLogSerial(type, id);
-    //       didMount.bind(target)();
-    //     };
-    //   } else {
-    //     // eslint-disable-next-line
-    //     target.prototype.componentDidMount = () => {
-    //       self.processLogSerial(type, id);
-    //     };
-    //   }
-
-    //   // PE点，监听组件componentWillUnmount
-    //   if (target.prototype.componentWillUnmount) {
-    //     const willUnMount = target.prototype.componentWillUnmount;
-    //     // eslint-disable-next-line
-    //     target.prototype.componentWillUnmount = () => {
-    //       self.processLogSerial(type === 'PV' ? 'PE' : 'AE', id); // 如果装饰器type为PV，则这里埋PE点；如type为AS，则这里为AE
-    //       self.sendLog(); // 在页面或APP卸载时发送所有存在的日志
-    //       willUnMount.bind(target)();
-    //     };
-    //   } else {
-    //     // eslint-disable-next-line
-    //     target.prototype.componentWillUnmount = () => {
-    //       self.processLogSerial(type === 'PV' ? 'PE' : 'AE', id);
-    //       self.sendLog(); // 在页面或APP卸载时发送所有存在的日志
-    //     };
-    //   }
-    // };
-    return WrappedComponent =>
-      class extends React.Component {
-        componentDidMount() {
-          self.processLogSerial(type, id);
-        }
-
-        componentWillUnmount() {
-          self.processLogSerial(type === 'PV' ? 'PE' : 'AE', id); // 如果装饰器type为PV，则这里埋PE点；如type为AS，则这里为AE
-          self.sendLog(); // 在页面或APP卸载时发送所有存在的日志
-        }
-
-        render() {
-          return <WrappedComponent {...this.props} />;
-        }
-      };
-  }
-
-  // Class方法装饰器
-  trackEventMethodDecorator(type, id, custom) {
-    const self = this;
-    return (target, name, describe) => {
-      console.log(target, name, describe);
-      const fn = describe.value;
-      // eslint-disable-next-line
-      describe.value = () => {
-        self.processLogSerial(type, id, custom);
-        fn();
-      };
-    };
-  }
-
   // 事件日志侵入生成， force表示是否强制立即推送
-  trackEv(type, id, custom, force = false) {
+  trackEv(type: string, id: string, custom?: any, force = false) {
     this.processLogSerial(type, id, custom, force);
   }
 
@@ -209,26 +179,22 @@ class Monitor {
     if (!this.baseInfo) {
       // 用户
       if (this.custno === '') {
-        this.custno = (JSON.parse(window.localStorage.getItem('userInfo')) || {}).custno || null;
+        this.custno = (JSON.parse(window.localStorage.getItem('userInfo') || '{}')).custno || null;
       }
       // 设备指纹
       const ua = window.navigator.userAgent;
-      const device = new UserAgent(ua);
+      // const device = new UserAgent(ua);
       this.deviceInfo = {
         ua, // 客户端的user agent
-        os: device.os && device.os.name, // 根据UA计算，操作系统
-        osv: device.os && device.os.version && device.os.version.alias, // 根据UA计算，操作系统版本
-        dt: device.device && device.device.type, // 设备类型
-        bt: device.browser && device.browser.name, // 浏览器类型
-        btv: device.browser && device.browser.version && device.browser.version.original, // 浏览器版本
+        // os: device.os && device.os.name, // 根据UA计算，操作系统
+        // osv: device.os && device.os.version && device.os.version.alias, // 根据UA计算，操作系统版本
+        // dt: device.device && device.device.type, // 设备类型
+        // bt: device.browser && device.browser.name, // 浏览器类型
+        // btv: device.browser && device.browser.version && device.browser.version.original, // 浏览器版本
         maccode: this.maccode
       };
-      if (!this.accptMd) {
-        if (window.deviceInfo && window.deviceInfo.os) {
-          this.accptmd = (window.deviceInfo || {}).os.toLowerCase() === 'ios' ? '2' : '3';
-        } else {
-          this.accptmd = isAndroidOrIOS() === 'android' ? '3' : '2';
-        }
+      if (!this.accptmd) {
+        this.accptmd = isAndroidOrIOS() === 'android' ? '3' : '2';
       }
 
       this.baseInfo = {
@@ -244,25 +210,25 @@ class Monitor {
         url: document.URL,
         sc: window && window.screen && `${window.screen.width}X${window.screen.height}`, // 屏幕尺寸/分辨率
         dpi: window.devicePixelRatio || '', // 设备像素比
-        accptmd: this.accptMd // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
+        accptmd: this.accptmd // 终端类型 1 -> PC ;  2 -> iOS;  3 -> Android ;  4 -> H5;  5 -> 微信小程序
       };
     }
   }
 
   // 变更用户信息
-  setUser(custno) {
+  setUser(custno: string) {
     this.custno = custno;
     this.baseInfo = { ...this.baseInfo, custno };
   }
 
   // 设置流量来源
-  setUTM(source) {
+  setUTM(source: string) {
     this.utm = source;
     this.baseInfo = { ...this.baseInfo, utm: source };
   }
 
   // 设置设备指纹，当项目在如APP能通过JSBridge获取时，可以自定义设置设备指纹信息
-  setDeviceInfo(deviceInfo) {
+  setDeviceInfo(deviceInfo: DeviceInfo) {
     this.deviceInfo = {
       ...this.deviceInfo,
       ...deviceInfo
@@ -274,7 +240,7 @@ class Monitor {
   }
 
   // 专供函数组件使用的PV/PE埋点hooks，在函数组件中调用 monitor.useTrack('123', {}); force表示是否立即发送
-  useTrack(id, custom, force = false) {
+  useTrack(id: string, custom?: any, force = false) {
     useEffect(() => {
       this.processLogSerial('PV', id, custom, force);
       return () => {

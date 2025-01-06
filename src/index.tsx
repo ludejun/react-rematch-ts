@@ -1,14 +1,12 @@
 // import '@babel/polyfill';
-import 'core-js';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './store';
 import './index.less';
-import { Routes } from './routes';
+import { DRoutes } from './routes';
 import Storage from './utils/Storage';
 import configs from './configs';
-import * as serviceWorker from './serviceWorker';
 import monitor from './utils/monitor';
 
 Storage.setNamespace(configs.name);
@@ -18,14 +16,10 @@ monitor.init({
   apiUrl: 'http://localhost:3000/log.gif'
 });
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as HTMLElement);
+root.render(
   <Provider store={store}>
-    <Routes />
-  </Provider>,
-  document.getElementById('root') as HTMLElement
+    <DRoutes />
+  </Provider>
+  , 
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

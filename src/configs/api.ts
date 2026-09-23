@@ -1,4 +1,4 @@
-import configs, { Env } from '.';
+import configs, { type Env } from '.';
 
 // API对应url配置
 export const apiConfig: Record<string, string> = {

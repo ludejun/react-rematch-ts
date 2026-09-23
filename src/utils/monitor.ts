@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import getIP from './ip';
 import { isAndroidOrIOS } from '.';
 
@@ -55,7 +55,16 @@ class Monitor {
   }
 
   // 初始化
-  init({ appName, appVersion, headerName, apiUrl, maxStorage, custno, maccode, accptmd }: {
+  init({
+    appName,
+    appVersion,
+    headerName,
+    apiUrl,
+    maxStorage,
+    custno,
+    maccode,
+    accptmd
+  }: {
     headerName?: string;
     apiUrl: string;
     maxStorage?: number;
@@ -103,14 +112,13 @@ class Monitor {
         }
       }
 
-      // 监听浏览器关闭和刷新
-      const self = this;
-      window.onbeforeunload = function() {
-        self.processLogSerial('AE', ''); // 自动加AE点， TODO：无ID
-        self.sendLog();
+      // 监听浏览器关闭和刷新（箭头函数，`this` 词法绑定到实例）
+      window.onbeforeunload = () => {
+        this.processLogSerial('AE', ''); // 自动加AE点， TODO：无ID
+        this.sendLog();
       };
     } catch (e) {
-      console.log('[Monitor初始化报错]:', e);
+      console.warn('[Monitor初始化报错]:', e);
     }
 
     this.generateNormal(); // 生成外层通用字段
@@ -125,7 +133,7 @@ class Monitor {
       if (this.ev.length > 0) {
         // 当this.baseInfo中无IP信息
         if (!this.baseInfo?.ip) {
-          getIP((ip) => (this.baseInfo!.ip = ip));
+          getIP(ip => (this.baseInfo!.ip = ip));
         }
         const request = new XMLHttpRequest();
         // request.responseType = 'blob';
@@ -179,7 +187,7 @@ class Monitor {
     if (!this.baseInfo) {
       // 用户
       if (this.custno === '') {
-        this.custno = (JSON.parse(window.localStorage.getItem('userInfo') || '{}')).custno || null;
+        this.custno = JSON.parse(window.localStorage.getItem('userInfo') || '{}').custno || null;
       }
       // 设备指纹
       const ua = window.navigator.userAgent;
@@ -240,7 +248,11 @@ class Monitor {
   }
 
   // 专供函数组件使用的PV/PE埋点hooks，在函数组件中调用 monitor.useTrack('123', {}); force表示是否立即发送
+  // Called from inside a function component's body, so the hook rules do hold —
+  // eslint just cannot tell that from a method on a class.
+
   useTrack(id: string, custom?: any, force = false) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       this.processLogSerial('PV', id, custom, force);
       return () => {

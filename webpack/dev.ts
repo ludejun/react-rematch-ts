@@ -1,4 +1,3 @@
-/* eslint-disable */
 import projectConfig from '../src/configs/index';
 const path = require('path');
 const webpack = require('webpack');
@@ -7,8 +6,7 @@ const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const env = {
@@ -78,7 +76,7 @@ const loaders = [
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: ['file-loader']
+    type: 'asset/resource'
   }
 ];
 
@@ -102,8 +100,7 @@ const config = {
     filename: '[name].[chunkhash].js',
     // 如有使用import()动态加载的代码打包
     chunkFilename: '[name].bundle.js',
-    publicPath:
-      'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
+    publicPath: 'http://' + env.hot_server_host + ':' + env.hot_server_port + '/'
   },
 
   // What information should be printed to the console

@@ -1,13 +1,28 @@
-import { ApiOptions } from '../configs/api';
+import { type ApiOptions } from '../configs/api';
 
 export const isPromise = (promise: unknown) => promise instanceof Promise;
 
 interface WrapperOptions {
-  fetch: typeof fetch;
-  fetchOptionsProc: (...args: unknown[]) => Record<string, unknown>;
+  /**
+   * The request function the store supplies — not the global fetch: it resolves
+   * to the parsed response body.
+   */
+  fetch: (api: RequestInfo, options?: RequestInit) => Promise<unknown>;
+  /** Builds the request init, as called below: (params, headers, method). */
+  fetchOptionsProc: (
+    params?: unknown,
+    headers?: ApiOptions['headers'],
+    method?: ApiOptions['method']
+  ) => ApiOptions;
   urlProc: (url: string) => string;
   errorCallback: () => void;
 }
+
+/**
+ * Redux hands middleware a dispatch typed over AnyAction; accepting that shape
+ * rather than `unknown` keeps this assignable to redux's Middleware.
+ */
+type NextDispatch = (action: { type: string; payload?: unknown }) => unknown;
 
 interface Error {
   name: string;
@@ -15,91 +30,89 @@ interface Error {
   stack?: string;
 }
 
-export const wrapperRequest = ({
-  fetch,
-  fetchOptionsProc,
-  urlProc,
-  errorCallback
-}: WrapperOptions) => (next: (action: unknown) => unknown) => (action: {
-  type: string;
-  payload: {
-    apiUrl?: string; // API请求的真实URL，当有此项忽略apiName，默认没有
-    params?: unknown; // 一般是Post请求的body
-    apiName?: string; // urlProc函数的参数，一般通过此key在mapping表中找真实的URL
-    apiOptions?: ApiOptions; //
-  };
-}) => {
-  if (!fetch) {
-    return next(action);
-  }
-
-  const { type, payload } = action;
-  const { params, apiName, apiOptions, apiUrl = '' } = payload || {};
-  let url: string = apiUrl;
-  if (!apiUrl) {
-    if (urlProc && apiName) {
-      url = urlProc(apiName);
+export const wrapperRequest =
+  ({ fetch, fetchOptionsProc, urlProc, errorCallback }: WrapperOptions) =>
+  (next: NextDispatch) =>
+  (action: {
+    type: string;
+    payload: {
+      apiUrl?: string; // API请求的真实URL，当有此项忽略apiName，默认没有
+      params?: unknown; // 一般是Post请求的body
+      apiName?: string; // urlProc函数的参数，一般通过此key在mapping表中找真实的URL
+      apiOptions?: ApiOptions; //
+    };
+  }) => {
+    if (!fetch) {
+      return next(action);
     }
-  }
 
-  // // 如果是GET请求，将params拼接在URL后
-  // if (apiOptions.method === 'GET' && params && typeof params === 'object' && Object.keys(params).length > 0) {
-  //   Object.keys(params).forEach((param: string) => {
-  //     url = addParamsToUrl(url, param, params[param]);
-  //   })
-  // }
-  let options = (apiOptions || {}) as ApiOptions;
-  if (fetchOptionsProc && payload) {
-    options = {
-      ...fetchOptionsProc(params, options.headers, options.method),
-      ...options
-    };
-  } else {
-    options = {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: '',
-      ...options
-    };
-  }
-
-  if (url && options) {
-    next({
-      type,
-      payload: {
-        loading: true,
-        status: 'start',
-        params
+    const { type, payload } = action;
+    const { params, apiName, apiOptions, apiUrl = '' } = payload || {};
+    let url: string = apiUrl;
+    if (!apiUrl) {
+      if (urlProc && apiName) {
+        url = urlProc(apiName);
       }
-    });
+    }
 
-    return fetch(url, options)
-      .then(data => {
-        next({
-          type,
-          payload: {
-            data,
-            loading: false,
-            status: 'success',
-            params
-          }
-        });
-        return data;
-      })
-      .catch((error: Error) => {
-        next({
-          type,
-          payload: {
-            error,
-            loading: false,
-            status: 'failure',
-            params
-          }
-        });
-        errorCallback && errorCallback();
-        return Promise.reject(error);
+    // // 如果是GET请求，将params拼接在URL后
+    // if (apiOptions.method === 'GET' && params && typeof params === 'object' && Object.keys(params).length > 0) {
+    //   Object.keys(params).forEach((param: string) => {
+    //     url = addParamsToUrl(url, param, params[param]);
+    //   })
+    // }
+    let options = (apiOptions || {}) as ApiOptions;
+    if (fetchOptionsProc && payload) {
+      options = {
+        ...fetchOptionsProc(params, options.headers, options.method),
+        ...options
+      };
+    } else {
+      options = {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: '',
+        ...options
+      };
+    }
+
+    if (url && options) {
+      next({
+        type,
+        payload: {
+          loading: true,
+          status: 'start',
+          params
+        }
       });
-  }
-  return next(action);
-};
+
+      return fetch(url, options)
+        .then(data => {
+          next({
+            type,
+            payload: {
+              data,
+              loading: false,
+              status: 'success',
+              params
+            }
+          });
+          return data;
+        })
+        .catch((error: Error) => {
+          next({
+            type,
+            payload: {
+              error,
+              loading: false,
+              status: 'failure',
+              params
+            }
+          });
+          errorCallback?.();
+          return Promise.reject(error);
+        });
+    }
+    return next(action);
+  };

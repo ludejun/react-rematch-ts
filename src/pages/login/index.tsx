@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { DispatchPro, RootState } from '@/store';
+import { type DispatchPro, type RootState } from '@/store';
 import Storage from '@/utils/Storage';
 import './index.less';
 
@@ -26,7 +26,7 @@ class Login extends React.Component<ILoginProps> {
     });
   }
 
-  render() {
+  override render() {
     const { isAuth, isLogining, userInfo } = this.props;
     return (
       <div className="login">

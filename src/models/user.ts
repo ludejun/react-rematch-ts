@@ -1,7 +1,7 @@
 import request from '../utils/request';
 import { apiURL, ajaxPostOptions } from '../configs/api';
 import { createModel } from '@rematch/core';
-import { RootModel } from '.';
+import { type RootModel } from '.';
 
 /*
 这是正常使用rematch的model，在dispatch action时，只需要带payload，不需要再包装params、apiName
@@ -62,7 +62,7 @@ export const user = createModel<RootModel>()({
               cb(res.data);
             }
           }
-        } catch (e) {
+        } catch {
           userStore.loginFail();
         }
       }
@@ -86,7 +86,7 @@ export const user = createModel<RootModel>()({
   //           cb(res.data);
   //         }
   //       }
-  //     } catch (e) {
+  //     } catch {
   //       this.loginFail();
   //     }
   //   }

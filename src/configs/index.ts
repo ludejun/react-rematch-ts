@@ -13,6 +13,14 @@ const configs = {
     prod: '/',
     mock: '/'
   } as Record<Env, string>, // API请求各环境的Domain配置
+  // 生产构建的 publicPath（webpack output.publicPath）。部署到 CDN 时把对应环境
+  // 改成 CDN 地址，例如 'https://cdn.example.com/assets/'。
+  staticUrl: {
+    local: '/',
+    dev: '/',
+    prod: '/',
+    mock: '/'
+  } as Record<Env, string>,
   mockWhiteList: [] as string[] // 后端Mock Server的白名单，在白名单中可走Mock服务器，不然还是走DEV服务器
 };
 

@@ -1,52 +1,96 @@
-## PC端React脚手架项目
+<h1 align="center">react-rematch-ts</h1>
 
-使用技术栈：
-React + Redux + React-Router + Rematch + webpack + typescript + mock + eslint + prettier + fetch
+<p align="center">
+  A production-ready React scaffold for desktop web: React 19, Rematch, React Router 7,
+  TypeScript and webpack 5 — with mocking, request middleware and monitoring already wired up.
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=white" alt="react 19" />
+  <img src="https://img.shields.io/badge/typescript-5.9-3178c6?logo=typescript&logoColor=white" alt="typescript 5.9" />
+  <img src="https://img.shields.io/badge/webpack-5-8dd6f9?logo=webpack&logoColor=black" alt="webpack 5" />
+  <img src="https://img.shields.io/badge/rematch-2-e6484f" alt="rematch 2" />
+  <img src="https://img.shields.io/badge/pnpm-10-f69220?logo=pnpm&logoColor=white" alt="pnpm 10" />
+  <br />
+  <a href="https://github.com/ludejun/react-rematch-ts/actions/workflows/ci.yml"><img src="https://github.com/ludejun/react-rematch-ts/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
+  <a href="https://github.com/ludejun/react-rematch-ts/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ludejun/react-rematch-ts?color=blue" alt="license" /></a>
+  <a href="https://github.com/ludejun/react-rematch-ts/blob/master/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" /></a>
+</p>
 
+<p align="center">
+  <a href="./CHANGELOG.md">Changelog</a>
+  ·
+  <a href="./CONTRIBUTING.md">Contributing</a>
+  ·
+  <a href="./README_CN.md">中文文档</a>
+</p>
 
-#### 项目命令行
+---
 
-- 安装项目：`yarn install`
+Stack: React · Redux · React Router · Rematch · webpack · TypeScript · Mock.js · ESLint · Prettier · fetch
 
-- 启动开发环境：`yarn start`
+## Requirements
 
-  Runs the app in the development mode.<br />
-  Open [http://localhost:5591](http://localhost:5591) to view it in the browser.
+Node >= 20, and [pnpm](https://pnpm.io/).
 
-- 启动开发环境并查看包体积分布：`yarn start:size`
+## Commands
 
-- 生产打包：`yarn build`
+```shell
+pnpm install       # install
+pnpm start         # dev server on http://localhost:5591
+pnpm start:size    # dev server, with the bundle analyzer
+pnpm start:mock    # dev server, with Mock.js intercepting requests
+pnpm build         # production build, output in release/
 
-  打包内容在release文件夹中
+pnpm lint          # eslint
+pnpm typecheck     # tsc --noEmit
+pnpm test          # vitest
+pnpm format        # prettier --write
+```
 
+## What it gives you
 
+1. **Current React** — use classes or hooks freely; Redux for state and React Router for routing.
+2. **[Rematch](https://github.com/rematch/rematch)** as the Redux layer, which removes most of the
+   boilerplate.
+3. **webpack 5**, with separate dev / test / staging / production environments and hot reloading.
+4. **Bundle analysis** on demand in both dev and production, so an oversized dependency does not
+   reach production unnoticed.
+5. **Cache-aware asset splitting** — rarely-changing vendor code is emitted as a fixed
+   `cached.bundle.js`, everything else is content-hashed and injected into the HTML automatically.
+6. **ESLint 9 (flat config) + Prettier** for a single code style across projects.
+7. **Pre-commit enforcement** through husky and lint-staged: unformatted or failing code cannot be
+   committed.
+8. **Mock.js** for local API mocking, intercepting requests in dev mode without touching the source.
+9. **TypeScript in strict mode**, so more mistakes surface at compile time.
+10. **fetch** as the HTTP layer, with per-environment configuration.
+11. **Worked examples** of routing, components, sync and async actions, reducers, request handling
+    and shared helpers — start from them rather than from an empty folder.
 
-#### 特性
+## Project layout
 
-1. 最新的react框架，自由使用class或者hooks；添加最成熟的redux作为状态管理、router作为路由管理工具；
-2. 使用[rematch]( https://github.com/rematch/rematch)作为redux中间件，尽量减少模版代码，极大提高开发效率；
-3. 使用最新webpack作为打包，区分开发/测试/内测/生产环境；集成热加载，提高开发测试效率；
-4. 开发/生产环境集成包体积命令行，准确了解各包体积大小及组成，杜绝大依赖包引入（如禁止lodash、moment引入生产）；
-5. 静态资源分常变更和不常变更类型，变更资源name上添加hash，自动更新html引入；
-6. 使用eslint+prettier组合规范前端代码，统一各项目代码格式，自动修改代码到规范配置；
-7. 将代码规范强制绑定git commit，提交代码前自动校验并修复代码规范，不规范代码不能提交；
-8. 使用mockjs作为前端本地API mock工具，自动在开发模式下，无代码侵入代理前端代码发出的XMLHttpRequest请求;
-9. 集成typescript，提高前端代码质量，在编译模式发现更多可能bug；
-10. 使用fetch作为ajax库，api各环节高度配置化；
-11. 丰富的路由、组件、同步action、异步action、reducer、请求处理、基础函数等示例，可以直接参考上手开发。
+```
+src/
+  configs/      environment config, API URLs and request options
+  middleware/   the request middleware that wraps async actions
+  models/       rematch models
+  pages/        routed pages and components
+  utils/        request, storage, monitoring, shared helpers
+webpack/        dev.ts and prod.ts
+mock/           Mock.js definitions
+tests/          vitest
+```
 
+## Reference
 
+- [Rematch handbook](https://rematch.gitbook.io/handbook/)
+- [fetch](https://github.github.io/fetch/)
+- [Mock.js examples](http://mockjs.com/examples.html)
 
+## Contributing
 
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-#### 参考文档
+## License
 
-[Rematch实践指南](https://rematch.gitbook.io/handbook/)
-
-[fetch使用](https://github.github.io/fetch/)
-
-[MockJS示例](http://mockjs.com/examples.html)
-
-[YApi官网](https://yapi.baidu.com/doc/index.html) [github](https://github.com/ymfe/yapi)
-
+[MIT](./LICENSE)

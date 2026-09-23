@@ -21,5 +21,4 @@ root.render(
   <Provider store={store}>
     <DRoutes />
   </Provider>
-  , 
 );

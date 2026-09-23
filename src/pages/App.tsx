@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Count from './components/Count';
-import { DispatchPro, RootState } from '../store';
+import { type DispatchPro, type RootState } from '../store';
 import monitor from '../utils/monitor';
 import logo from './logo.svg';
 import './App.less';
@@ -30,7 +30,7 @@ class App extends React.Component<IAppProps> {
     });
   };
 
-  render() {
+  override render() {
     const { increment } = this.props;
     return (
       <div className="App">

@@ -1,4 +1,4 @@
-import { Models } from '@rematch/core';
+import { type Models } from '@rematch/core';
 import { count } from './count';
 import { user } from './user';
 

@@ -1,5 +1,5 @@
 import { createModel } from '@rematch/core';
-import { RootModel } from '.';
+import { type RootModel } from '.';
 
 /*
 这是使用middleware的rematch的model，在dispatch action时，需要再包装params、apiName

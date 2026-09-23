@@ -1,5 +1,5 @@
-import { Count } from './count';
-import { Login } from './user';
+import { type Count } from './count';
+import { type Login } from './user';
 
 export interface ApiDict {
   count: Count; // 示例

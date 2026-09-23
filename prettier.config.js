@@ -5,5 +5,5 @@ module.exports = {
   eslintIntegration: true,
   insertPragma: false,
   trailingComma: 'all',
-  arrowParens: 'avoid',
+  arrowParens: 'avoid'
 };

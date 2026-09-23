@@ -5,8 +5,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 import projectConfig, { Env } from '../src/configs';
 
 const loaders = [
@@ -26,11 +25,7 @@ const loaders = [
     exclude: /node_modules/,
     loader: 'babel-loader',
     options: {
-      presets: [
-        '@babel/preset-env',
-        '@babel/preset-react',
-        '@babel/preset-typescript'
-      ]
+      presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
       // plugins: [['import', { libraryName: 'antd', style: 'css' }]],
     }
   }, // 先解析ts和tsx，rule规则从下往上
@@ -46,34 +41,17 @@ const loaders = [
   },
   {
     test: /\.less$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      'css-loader',
-      'postcss-loader',
-      'less-loader'
-    ]
+    use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader']
   },
   {
     test: /\.(png|svg|jpg|gif)$/,
-    use: [
-      {
-        loader: 'file-loader',
-        options: {
-          name: '/static/[name]-[hash].[ext]'
-        }
-      }
-    ]
+    type: 'asset/resource',
+    generator: { filename: 'static/[name]-[hash][ext]' }
   },
   {
     test: /\.(woff|woff2|eot|ttf|otf)$/,
-    use: [
-      {
-        loader: 'file-loader',
-        options: {
-          name: '/static/[name]-[hash].[ext]'
-        }
-      }
-    ]
+    type: 'asset/resource',
+    generator: { filename: 'static/[name]-[hash][ext]' }
   }
 ];
 
@@ -81,8 +59,8 @@ const config = {
   resolve: {
     extensions: ['.ts', '.tsx', '.web.js', '.js', '.jsx'],
     alias: {
-      '@': path.join(__dirname, '../src'),
-    },
+      '@': path.join(__dirname, '../src')
+    }
   },
   entry: {
     main: './src/index.tsx'
@@ -165,18 +143,24 @@ const config = {
     splitChunks: {
       chunks: 'all',
       minSize: 30000,
-      maxSize: 0,
+      // No maxSize: under webpack 5 a maxSize of 0 splits aggressively, which
+      // produced two chunks both claiming the fixed cached.bundle.js filename.
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       automaticNameDelimiter: '~',
-      name: true,
+      // webpack 4 accepted `name: true` here; webpack 5 only takes false, a
+      // string or a function, and derives sensible names on its own.
       cacheGroups: {
         cached: {
           test: /[\\/]node_modules[\\/](react|react-dom|core-js)[\\/]/,
-          chunks: 'all',
+          // 'initial' rather than 'all': the filename below is fixed, so an
+          // async copy of this group would collide with the initial one.
+          chunks: 'initial',
+          enforce: true,
+          priority: 10,
           name: 'cached',
-          filename: 'cached.bundle.js' // 直接写死文件名，不加hash
+          filename: 'cached.bundle.js' // 直接写死文件名，不加hash，便于长期缓存
         },
         vendors: {
           // 在output中加hash

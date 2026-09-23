@@ -1,8 +1,8 @@
-import { init, RematchDispatch, RematchRootState } from '@rematch/core';
+import { init, type RematchDispatch, type RematchRootState } from '@rematch/core';
 import { apiURL, ajaxPostOptions, ajaxGetOptions } from './configs/api';
-import { ApiDict } from './configs/request-info';
+import { type ApiDict } from './configs/request-info';
 import { wrapperRequest } from './middleware/wrapperRequest';
-import { models, RootModel } from './models';
+import { models, type RootModel } from './models';
 import request from './utils/request';
 
 const promiseMiddlewareConfig = {
@@ -58,5 +58,7 @@ type ChangeDispatchType<
 //   };
 // };
 
-// @ts-ignore
+// @ts-expect-error -- ChangeDispatchType maps rematch's Dispatch into the
+// per-model shape used across the app; the mapped type is wider than rematch's
+// own declaration allows.
 export type DispatchPro = ChangeDispatchType<Dispatch>;

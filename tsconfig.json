@@ -1,31 +1,36 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "module": "commonjs",
-    "target": "es5",
-    "lib": ["es6", "dom"],
-    "allowJs": true,
-    "jsx": "react",
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+
     "strict": true,
-    "moduleResolution": "node",
-    "baseUrl": ".", // 解决不识别path地址的问题
-    "rootDir": "./",
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "typeRoots": ["src", "node_modules/@types"],
-    "allowSyntheticDefaultImports": true,
+
+    "noEmit": true
   },
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "src/setupTests.ts",
-    // "configs/**/*"
-  ],
-  "types": ["typePatches"]
+  "include": ["src/**/*", "tests/**/*", "webpack/**/*", "vitest.config.ts"],
+  "exclude": ["node_modules", "release", "dist"],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node"
+    }
+  }
 }

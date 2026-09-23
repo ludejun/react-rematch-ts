@@ -16,7 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 22]
+        # jsdom 30, which the tests run on, requires Node ^22.22.2 || ^24.15.0
+        # || >=26. The build job below still covers Node 20.
+        node: [22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -39,3 +41,17 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+  # The scaffold itself targets Node >= 20; this proves it still builds there
+  # even though the test harness needs a newer one.
+  build-on-oldest-supported:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --ignore-scripts
+      - run: pnpm run build
